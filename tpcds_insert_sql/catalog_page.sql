@@ -1,0 +1,1 @@
+insert into catalog_page select * from tpcds.sf1000.catalog_page;

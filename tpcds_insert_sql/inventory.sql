@@ -1,0 +1,1 @@
+insert into inventory select * from tpcds.sf1000.inventory;

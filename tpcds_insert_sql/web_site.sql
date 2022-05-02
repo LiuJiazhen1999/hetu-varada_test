@@ -1,0 +1,1 @@
+insert into web_site select * from tpcds.sf1000.web_site;
