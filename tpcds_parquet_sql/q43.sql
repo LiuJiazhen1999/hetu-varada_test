@@ -10,9 +10,9 @@ SELECT
 , "sum"((CASE WHEN ("d_day_name" = 'Friday   ') THEN "ss_sales_price" ELSE null END)) "fri_sales"
 , "sum"((CASE WHEN ("d_day_name" = 'Saturday ') THEN "ss_sales_price" ELSE null END)) "sat_sales"
 FROM
-  varada.tpcds_1000.date_dim
-, varada.tpcds_1000.store_sales
-, varada.tpcds_1000.store
+  hive.tpcds_parquet_1000.date_dim
+, hive.tpcds_parquet_1000.store_sales
+, hive.tpcds_parquet_1000.store
 WHERE ("d_date_sk" = "ss_sold_date_sk")
    AND ("s_store_sk" = "ss_store_sk")
    AND ("s_gmt_offset" = -5)

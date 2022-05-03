@@ -10,16 +10,16 @@ SELECT
 FROM
   (
    SELECT
-     'varada.tpcds_1000.store' "channel"
+     'hive.tpcds_parquet_1000.store' "channel"
    , 'ss_store_sk' "col_name"
    , "d_year"
    , "d_qoy"
    , "i_category"
    , "ss_ext_sales_price" "ext_sales_price"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.item
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.item
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("ss_store_sk" IS NULL)
       AND ("ss_sold_date_sk" = "d_date_sk")
       AND ("ss_item_sk" = "i_item_sk")
@@ -31,9 +31,9 @@ UNION ALL    SELECT
    , "i_category"
    , "ws_ext_sales_price" "ext_sales_price"
    FROM
-     varada.tpcds_1000.web_sales
-   , varada.tpcds_1000.item
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.web_sales
+   , hive.tpcds_parquet_1000.item
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("ws_ship_customer_sk" IS NULL)
       AND ("ws_sold_date_sk" = "d_date_sk")
       AND ("ws_item_sk" = "i_item_sk")
@@ -45,9 +45,9 @@ UNION ALL    SELECT
    , "i_category"
    , "cs_ext_sales_price" "ext_sales_price"
    FROM
-     varada.tpcds_1000.catalog_sales
-   , varada.tpcds_1000.item
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.catalog_sales
+   , hive.tpcds_parquet_1000.item
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("cs_ship_addr_sk" IS NULL)
       AND ("cs_sold_date_sk" = "d_date_sk")
       AND ("cs_item_sk" = "i_item_sk")

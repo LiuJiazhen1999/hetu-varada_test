@@ -1,12 +1,12 @@
  
 SELECT DISTINCT "i_product_name"
 FROM
-  varada.tpcds_1000.item i1
+  hive.tpcds_parquet_1000.item i1
 WHERE ("i_manufact_id" BETWEEN 738 AND (738 + 40))
    AND ((
       SELECT "count"(*) "item_cnt"
       FROM
-        varada.tpcds_1000.item
+        hive.tpcds_parquet_1000.item
       WHERE (("i_manufact" = "i1"."i_manufact")
             AND ((("i_category" = 'Women                                             ')
                   AND (("i_color" = 'powder              ')

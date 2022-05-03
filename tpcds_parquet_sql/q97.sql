@@ -5,8 +5,8 @@ WITH
      "ss_customer_sk" "customer_sk"
    , "ss_item_sk" "item_sk"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("ss_sold_date_sk" = "d_date_sk")
       AND ("d_month_seq" BETWEEN 1200 AND (1200 + 11))
    GROUP BY "ss_customer_sk", "ss_item_sk"
@@ -16,8 +16,8 @@ WITH
      "cs_bill_customer_sk" "customer_sk"
    , "cs_item_sk" "item_sk"
    FROM
-     varada.tpcds_1000.catalog_sales
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.catalog_sales
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("cs_sold_date_sk" = "d_date_sk")
       AND ("d_month_seq" BETWEEN 1200 AND (1200 + 11))
    GROUP BY "cs_bill_customer_sk", "cs_item_sk"

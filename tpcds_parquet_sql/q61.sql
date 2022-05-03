@@ -7,13 +7,13 @@ FROM
   (
    SELECT "sum"("ss_ext_sales_price") "promotions"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.store
-   , varada.tpcds_1000.promotion
-   , varada.tpcds_1000.date_dim
-   , varada.tpcds_1000.customer
-   , varada.tpcds_1000.customer_address
-   , varada.tpcds_1000.item
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.store
+   , hive.tpcds_parquet_1000.promotion
+   , hive.tpcds_parquet_1000.date_dim
+   , hive.tpcds_parquet_1000.customer
+   , hive.tpcds_parquet_1000.customer_address
+   , hive.tpcds_parquet_1000.item
    WHERE ("ss_sold_date_sk" = "d_date_sk")
       AND ("ss_store_sk" = "s_store_sk")
       AND ("ss_promo_sk" = "p_promo_sk")
@@ -32,12 +32,12 @@ FROM
 , (
    SELECT "sum"("ss_ext_sales_price") "total"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.store
-   , varada.tpcds_1000.date_dim
-   , varada.tpcds_1000.customer
-   , varada.tpcds_1000.customer_address
-   , varada.tpcds_1000.item
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.store
+   , hive.tpcds_parquet_1000.date_dim
+   , hive.tpcds_parquet_1000.customer
+   , hive.tpcds_parquet_1000.customer_address
+   , hive.tpcds_parquet_1000.item
    WHERE ("ss_sold_date_sk" = "d_date_sk")
       AND ("ss_store_sk" = "s_store_sk")
       AND ("ss_customer_sk" = "c_customer_sk")

@@ -6,11 +6,11 @@ SELECT
 , "avg"("ss_coupon_amt") "agg3"
 , "avg"("ss_sales_price") "agg4"
 FROM
-  varada.tpcds_1000.store_sales
-, varada.tpcds_1000.customer_demographics
-, varada.tpcds_1000.date_dim
-, varada.tpcds_1000.item
-, varada.tpcds_1000.promotion
+  hive.tpcds_parquet_1000.store_sales
+, hive.tpcds_parquet_1000.customer_demographics
+, hive.tpcds_parquet_1000.date_dim
+, hive.tpcds_parquet_1000.item
+, hive.tpcds_parquet_1000.promotion
 WHERE ("ss_sold_date_sk" = "d_date_sk")
    AND ("ss_item_sk" = "i_item_sk")
    AND ("ss_cdemo_sk" = "cd_demo_sk")

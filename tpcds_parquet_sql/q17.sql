@@ -16,14 +16,14 @@ SELECT
 , "stddev_samp"("cs_quantity") "catalog_sales_quantitystdev"
 , ("stddev_samp"("cs_quantity") / "avg"("cs_quantity")) "catalog_sales_quantitycov"
 FROM
-  varada.tpcds_1000.store_sales
-, varada.tpcds_1000.store_returns
-, varada.tpcds_1000.catalog_sales
-, varada.tpcds_1000.date_dim d1
-, varada.tpcds_1000.date_dim d2
-, varada.tpcds_1000.date_dim d3
-, varada.tpcds_1000.store
-, varada.tpcds_1000.item
+  hive.tpcds_parquet_1000.store_sales
+, hive.tpcds_parquet_1000.store_returns
+, hive.tpcds_parquet_1000.catalog_sales
+, hive.tpcds_parquet_1000.date_dim d1
+, hive.tpcds_parquet_1000.date_dim d2
+, hive.tpcds_parquet_1000.date_dim d3
+, hive.tpcds_parquet_1000.store
+, hive.tpcds_parquet_1000.item
 WHERE ("d1"."d_quarter_name" = '2001Q1')
    AND ("d1"."d_date_sk" = "ss_sold_date_sk")
    AND ("i_item_sk" = "ss_item_sk")

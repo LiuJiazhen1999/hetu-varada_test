@@ -6,9 +6,9 @@ WITH
    , "ca_state" "ctr_state"
    , "sum"("cr_return_amt_inc_tax") "ctr_total_return"
    FROM
-     varada.tpcds_1000.catalog_returns
-   , varada.tpcds_1000.date_dim
-   , varada.tpcds_1000.customer_address
+     hive.tpcds_parquet_1000.catalog_returns
+   , hive.tpcds_parquet_1000.date_dim
+   , hive.tpcds_parquet_1000.customer_address
    WHERE ("cr_returned_date_sk" = "d_date_sk")
       AND ("d_year" = 2000)
       AND ("cr_returning_addr_sk" = "ca_address_sk")
@@ -33,8 +33,8 @@ SELECT
 , "ctr_total_return"
 FROM
   customer_total_return ctr1
-, varada.tpcds_1000.customer_address
-, varada.tpcds_1000.customer
+, hive.tpcds_parquet_1000.customer_address
+, hive.tpcds_parquet_1000.customer
 WHERE ("ctr1"."ctr_total_return" > (
       SELECT ("avg"("ctr_total_return") * DECIMAL '1.2')
       FROM

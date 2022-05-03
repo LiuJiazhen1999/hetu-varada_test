@@ -1,14 +1,14 @@
  
 SELECT
   "c_customer_id" "customer_id"
-, "concat"("concat"("c_last_name", ', '), "c_first_name") "varada.tpcds_1000.customername"
+, "concat"("concat"("c_last_name", ', '), "c_first_name") "hive.tpcds_parquet_1000.customername"
 FROM
-  varada.tpcds_1000.customer
-, varada.tpcds_1000.customer_address
-, varada.tpcds_1000.customer_demographics
-, varada.tpcds_1000.household_demographics
-, varada.tpcds_1000.income_band
-, varada.tpcds_1000.store_returns
+  hive.tpcds_parquet_1000.customer
+, hive.tpcds_parquet_1000.customer_address
+, hive.tpcds_parquet_1000.customer_demographics
+, hive.tpcds_parquet_1000.household_demographics
+, hive.tpcds_parquet_1000.income_band
+, hive.tpcds_parquet_1000.store_returns
 WHERE ("ca_city" = 'Edgewood')
    AND ("c_current_addr_sk" = "ca_address_sk")
    AND ("ib_lower_bound" >= 38128)

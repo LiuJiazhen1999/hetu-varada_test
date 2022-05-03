@@ -11,10 +11,10 @@ WITH
    , "avg"("sum"("cs_sales_price")) OVER (PARTITION BY "i_category", "i_brand", "cc_name", "d_year") "avg_monthly_sales"
    , "rank"() OVER (PARTITION BY "i_category", "i_brand", "cc_name" ORDER BY "d_year" ASC, "d_moy" ASC) "rn"
    FROM
-     varada.tpcds_1000.item
-   , varada.tpcds_1000.catalog_sales
-   , varada.tpcds_1000.date_dim
-   , varada.tpcds_1000.call_center
+     hive.tpcds_parquet_1000.item
+   , hive.tpcds_parquet_1000.catalog_sales
+   , hive.tpcds_parquet_1000.date_dim
+   , hive.tpcds_parquet_1000.call_center
    WHERE ("cs_item_sk" = "i_item_sk")
       AND ("cs_sold_date_sk" = "d_date_sk")
       AND ("cc_call_center_sk" = "cs_call_center_sk")

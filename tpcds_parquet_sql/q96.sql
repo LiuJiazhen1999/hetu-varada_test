@@ -1,10 +1,10 @@
  
 SELECT "count"(*)
 FROM
-  varada.tpcds_1000.store_sales
-, varada.tpcds_1000.household_demographics
-, varada.tpcds_1000.time_dim
-, varada.tpcds_1000.store
+  hive.tpcds_parquet_1000.store_sales
+, hive.tpcds_parquet_1000.household_demographics
+, hive.tpcds_parquet_1000.time_dim
+, hive.tpcds_parquet_1000.store
 WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
    AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
    AND ("ss_store_sk" = "s_store_sk")

@@ -7,8 +7,8 @@ SELECT
 , "i_wholesale_cost"
 , "i_brand"
 FROM
-  varada.tpcds_1000.store
-, varada.tpcds_1000.item
+  hive.tpcds_parquet_1000.store
+, hive.tpcds_parquet_1000.item
 , (
    SELECT
      "ss_store_sk"
@@ -20,8 +20,8 @@ FROM
       , "ss_item_sk"
       , "sum"("ss_sales_price") "revenue"
       FROM
-        varada.tpcds_1000.store_sales
-      , varada.tpcds_1000.date_dim
+        hive.tpcds_parquet_1000.store_sales
+      , hive.tpcds_parquet_1000.date_dim
       WHERE ("ss_sold_date_sk" = "d_date_sk")
          AND ("d_month_seq" BETWEEN 1176 AND (1176 + 11))
       GROUP BY "ss_store_sk", "ss_item_sk"
@@ -34,8 +34,8 @@ FROM
    , "ss_item_sk"
    , "sum"("ss_sales_price") "revenue"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("ss_sold_date_sk" = "d_date_sk")
       AND ("d_month_seq" BETWEEN 1176 AND (1176 + 11))
    GROUP BY "ss_store_sk", "ss_item_sk"

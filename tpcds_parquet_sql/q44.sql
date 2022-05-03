@@ -17,13 +17,13 @@ FROM
            "ss_item_sk" "item_sk"
          , "avg"("ss_net_profit") "rank_col"
          FROM
-           varada.tpcds_1000.store_sales ss1
+           hive.tpcds_parquet_1000.store_sales ss1
          WHERE ("ss_store_sk" = 4)
          GROUP BY "ss_item_sk"
          HAVING ("avg"("ss_net_profit") > (DECIMAL '0.9' * (
                   SELECT "avg"("ss_net_profit") "rank_col"
                   FROM
-                    varada.tpcds_1000.store_sales
+                    hive.tpcds_parquet_1000.store_sales
                   WHERE ("ss_store_sk" = 4)
                      AND ("ss_addr_sk" IS NULL)
                   GROUP BY "ss_store_sk"
@@ -45,13 +45,13 @@ FROM
            "ss_item_sk" "item_sk"
          , "avg"("ss_net_profit") "rank_col"
          FROM
-           varada.tpcds_1000.store_sales ss1
+           hive.tpcds_parquet_1000.store_sales ss1
          WHERE ("ss_store_sk" = 4)
          GROUP BY "ss_item_sk"
          HAVING ("avg"("ss_net_profit") > (DECIMAL '0.9' * (
                   SELECT "avg"("ss_net_profit") "rank_col"
                   FROM
-                    varada.tpcds_1000.store_sales
+                    hive.tpcds_parquet_1000.store_sales
                   WHERE ("ss_store_sk" = 4)
                      AND ("ss_addr_sk" IS NULL)
                   GROUP BY "ss_store_sk"
@@ -60,8 +60,8 @@ FROM
    )  v21
    WHERE ("rnk" < 11)
 )  descending
-, varada.tpcds_1000.item i1
-, varada.tpcds_1000.item i2
+, hive.tpcds_parquet_1000.item i1
+, hive.tpcds_parquet_1000.item i2
 WHERE ("asceding"."rnk" = "descending"."rnk")
    AND ("i1"."i_item_sk" = "asceding"."item_sk")
    AND ("i2"."i_item_sk" = "descending"."item_sk")

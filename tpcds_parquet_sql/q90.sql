@@ -4,10 +4,10 @@ FROM
   (
    SELECT "count"(*) "amc"
    FROM
-     varada.tpcds_1000.web_sales
-   , varada.tpcds_1000.household_demographics
-   , varada.tpcds_1000.time_dim
-   , varada.tpcds_1000.web_page
+     hive.tpcds_parquet_1000.web_sales
+   , hive.tpcds_parquet_1000.household_demographics
+   , hive.tpcds_parquet_1000.time_dim
+   , hive.tpcds_parquet_1000.web_page
    WHERE ("ws_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ws_ship_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ws_web_page_sk" = "web_page"."wp_web_page_sk")
@@ -18,10 +18,10 @@ FROM
 , (
    SELECT "count"(*) "pmc"
    FROM
-     varada.tpcds_1000.web_sales
-   , varada.tpcds_1000.household_demographics
-   , varada.tpcds_1000.time_dim
-   , varada.tpcds_1000.web_page
+     hive.tpcds_parquet_1000.web_sales
+   , hive.tpcds_parquet_1000.household_demographics
+   , hive.tpcds_parquet_1000.time_dim
+   , hive.tpcds_parquet_1000.web_page
    WHERE ("ws_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ws_ship_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ws_web_page_sk" = "web_page"."wp_web_page_sk")

@@ -19,11 +19,11 @@ SELECT
    AND (("sr_returned_date_sk" - "ss_sold_date_sk") <= 120) THEN 1 ELSE 0 END)) "91-120 days"
 , "sum"((CASE WHEN (("sr_returned_date_sk" - "ss_sold_date_sk") > 120) THEN 1 ELSE 0 END)) ">120 days"
 FROM
-  varada.tpcds_1000.store_sales
-, varada.tpcds_1000.store_returns
-, varada.tpcds_1000.store
-, varada.tpcds_1000.date_dim d1
-, varada.tpcds_1000.date_dim d2
+  hive.tpcds_parquet_1000.store_sales
+, hive.tpcds_parquet_1000.store_returns
+, hive.tpcds_parquet_1000.store
+, hive.tpcds_parquet_1000.date_dim d1
+, hive.tpcds_parquet_1000.date_dim d2
 WHERE ("d2"."d_year" = 2001)
    AND ("d2"."d_moy" = 8)
    AND ("ss_ticket_number" = "sr_ticket_number")

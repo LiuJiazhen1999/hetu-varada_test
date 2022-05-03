@@ -7,9 +7,9 @@ WITH
    , "d_date" "solddate"
    , "count"(*) "cnt"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.date_dim
-   , varada.tpcds_1000.item
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.date_dim
+   , hive.tpcds_parquet_1000.item
    WHERE ("ss_sold_date_sk" = "d_date_sk")
       AND ("ss_item_sk" = "i_item_sk")
       AND ("d_year" IN (2000   , (2000 + 1)   , (2000 + 2)   , (2000 + 3)))
@@ -24,9 +24,9 @@ WITH
         "c_customer_sk"
       , "sum"(("ss_quantity" * "ss_sales_price")) "csales"
       FROM
-        varada.tpcds_1000.store_sales
-      , varada.tpcds_1000.customer
-      , varada.tpcds_1000.date_dim
+        hive.tpcds_parquet_1000.store_sales
+      , hive.tpcds_parquet_1000.customer
+      , hive.tpcds_parquet_1000.date_dim
       WHERE ("ss_customer_sk" = "c_customer_sk")
          AND ("ss_sold_date_sk" = "d_date_sk")
          AND ("d_year" IN (2000      , (2000 + 1)      , (2000 + 2)      , (2000 + 3)))
@@ -38,8 +38,8 @@ WITH
      "c_customer_sk"
    , "sum"(("ss_quantity" * "ss_sales_price")) "ssales"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.customer
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.customer
    WHERE ("ss_customer_sk" = "c_customer_sk")
    GROUP BY "c_customer_sk"
    HAVING ("sum"(("ss_quantity" * "ss_sales_price")) > ((50 / DECIMAL '100.0') * (
@@ -53,8 +53,8 @@ FROM
   (
    SELECT ("cs_quantity" * "cs_list_price") "sales"
    FROM
-     varada.tpcds_1000.catalog_sales
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.catalog_sales
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("d_year" = 2000)
       AND ("d_moy" = 2)
       AND ("cs_sold_date_sk" = "d_date_sk")
@@ -70,8 +70,8 @@ FROM
    ))
 UNION ALL    SELECT ("ws_quantity" * "ws_list_price") "sales"
    FROM
-     varada.tpcds_1000.web_sales
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.web_sales
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("d_year" = 2000)
       AND ("d_moy" = 2)
       AND ("ws_sold_date_sk" = "d_date_sk")

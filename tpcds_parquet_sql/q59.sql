@@ -12,8 +12,8 @@ WITH
    , "sum"((CASE WHEN ("d_day_name" = 'Friday   ') THEN "ss_sales_price" ELSE null END)) "fri_sales"
    , "sum"((CASE WHEN ("d_day_name" = 'Saturday ') THEN "ss_sales_price" ELSE null END)) "sat_sales"
    FROM
-     varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.date_dim
+     hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.date_dim
    WHERE ("d_date_sk" = "ss_sold_date_sk")
    GROUP BY "d_week_seq", "ss_store_sk"
 ) 
@@ -43,8 +43,8 @@ FROM
    , "sat_sales" "sat_sales1"
    FROM
      wss
-   , varada.tpcds_1000.store
-   , varada.tpcds_1000.date_dim d
+   , hive.tpcds_parquet_1000.store
+   , hive.tpcds_parquet_1000.date_dim d
    WHERE ("d"."d_week_seq" = "wss"."d_week_seq")
       AND ("ss_store_sk" = "s_store_sk")
       AND ("d_month_seq" BETWEEN 1212 AND (1212 + 11))
@@ -63,8 +63,8 @@ FROM
    , "sat_sales" "sat_sales2"
    FROM
      wss
-   , varada.tpcds_1000.store
-   , varada.tpcds_1000.date_dim d
+   , hive.tpcds_parquet_1000.store
+   , hive.tpcds_parquet_1000.date_dim d
    WHERE ("d"."d_week_seq" = "wss"."d_week_seq")
       AND ("ss_store_sk" = "s_store_sk")
       AND ("d_month_seq" BETWEEN (1212 + 12) AND (1212 + 23))

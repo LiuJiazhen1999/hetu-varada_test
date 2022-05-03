@@ -7,10 +7,10 @@ FROM
    , "sum"("ss_sales_price") "sum_sales"
    , "avg"("sum"("ss_sales_price")) OVER (PARTITION BY "i_manager_id") "avg_monthly_sales"
    FROM
-     varada.tpcds_1000.item
-   , varada.tpcds_1000.store_sales
-   , varada.tpcds_1000.date_dim
-   , varada.tpcds_1000.store
+     hive.tpcds_parquet_1000.item
+   , hive.tpcds_parquet_1000.store_sales
+   , hive.tpcds_parquet_1000.date_dim
+   , hive.tpcds_parquet_1000.store
    WHERE ("ss_item_sk" = "i_item_sk")
       AND ("ss_sold_date_sk" = "d_date_sk")
       AND ("ss_store_sk" = "s_store_sk")

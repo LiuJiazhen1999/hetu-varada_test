@@ -5,14 +5,14 @@ SELECT
 , "avg"("wr_refunded_cash")
 , "avg"("wr_fee")
 FROM
-  varada.tpcds_1000.web_sales
-, varada.tpcds_1000.web_returns
-, varada.tpcds_1000.web_page
-, varada.tpcds_1000.customer_demographics cd1
-, varada.tpcds_1000.customer_demographics cd2
-, varada.tpcds_1000.customer_address
-, varada.tpcds_1000.date_dim
-, varada.tpcds_1000.reason
+  hive.tpcds_parquet_1000.web_sales
+, hive.tpcds_parquet_1000.web_returns
+, hive.tpcds_parquet_1000.web_page
+, hive.tpcds_parquet_1000.customer_demographics cd1
+, hive.tpcds_parquet_1000.customer_demographics cd2
+, hive.tpcds_parquet_1000.customer_address
+, hive.tpcds_parquet_1000.date_dim
+, hive.tpcds_parquet_1000.reason
 WHERE ("ws_web_page_sk" = "wp_web_page_sk")
    AND ("ws_item_sk" = "wr_item_sk")
    AND ("ws_order_number" = "wr_order_number")
