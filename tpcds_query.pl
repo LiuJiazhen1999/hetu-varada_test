@@ -19,7 +19,7 @@ for my $query ( @queries ) {
 
 	print "query : $query start \n";
 	my $queryStart = time();
-	my $cmd="(java -jar /proj/ccjs-PG0/indexproject/hetu-server-1.6.0/bin/hetu-cli-1.6.0-executable.jar --server localhost:8080 --catalog hive -f ./$query)";
+	my $cmd="(java -jar /home/ec2-user/bigdata/hetu-server-1.6.0/bin/hetu-cli-1.6.0-executable.jar --server localhost:8080 --catalog hive -f ./$query)";
 	my @warnoutput=`$cmd`;
 
 	my $queryEnd = time();
