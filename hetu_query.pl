@@ -29,17 +29,17 @@ for my $query ( @queries ) {
 	print HETU_PARQUET_QUERY_LOG "parquet $query : $queryTime\n";
 }
 
-chdir $SCRIPT_PATH;
-chdir 'tpcds_orc_sql';
+chdir '../tpcds_orc_sql';
+@queries = glob '*.sql';
 for my $query ( @queries ) {
 
-	print "orc query : $query start \n";
-	my $queryStart = time();
-	my $cmd="(java -jar /home/ec2-user/bigdata/hetu-server-1.6.0/bin/hetu-cli-1.6.0-executable.jar --server localhost:8080 --catalog hive -f ./$query)";
-	my @warnoutput=`$cmd`;
+        print "orc query : $query start \n";
+        my $queryStart = time();
+        my $cmd="(java -jar /home/ec2-user/bigdata/hetu-server-1.6.0/bin/hetu-cli-1.6.0-executable.jar --server localhost:8080 --catalog hive -f ./$query)";
+        my @warnoutput=`$cmd`;
 
-	my $queryEnd = time();
-	my $queryTime = $queryEnd - $queryStart;
-	print "orc Query : $query In $queryTime secs\n";
-	print HETU_ORC_QUERY_LOG "orc $query : $queryTime\n";
+        my $queryEnd = time();
+        my $queryTime = $queryEnd - $queryStart;
+        print "orc Query : $query In $queryTime secs\n";
+        print HETU_ORC_QUERY_LOG "orc $query : $queryTime\n";
 }
