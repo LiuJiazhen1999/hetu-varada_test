@@ -23,7 +23,7 @@ for my $query ( @queries ) {
 	my @warnoutput=`$cmd`;
 
 	my $insertEnd = time();
-	my $insetTime = $insertEnd - $insetStart ;
-	print "insert Query : $query In $insetTime secs\n";
-	print INSERT_LOG "$query : $warmTime\n";
+	my $insertTime = $insertEnd - $insetStart ;
+	print "insert Query : $query In $insertTime secs\n";
+	print INSERT_LOG "$query : $insertTime\n";
 }
