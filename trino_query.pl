@@ -20,7 +20,7 @@ for my $query ( @queries ) {
 
 	print "parquet query : $query start \n";
 	my $queryStart = time();
-	my $cmd="(./trino --server localhost:8080 --catalog hive -f ./$query)";
+	my $cmd="(/home/ec2-user/bigdata/trino-server-370/bin/trino --server localhost:8080 --catalog hive -f ./$query)";
 	my @warnoutput=`$cmd`;
 
 	my $queryEnd = time();
@@ -35,7 +35,7 @@ for my $query ( @queries ) {
 
         print "orc query : $query start \n";
         my $queryStart = time();
-        my $cmd="(./trino --server localhost:8080 --catalog hive -f ./$query)";
+        my $cmd="(/home/ec2-user/bigdata/trino-server-370/bin/trino --server localhost:8080 --catalog hive -f ./$query)";
         my @warnoutput=`$cmd`;
 
         my $queryEnd = time();
