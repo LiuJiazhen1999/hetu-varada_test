@@ -23,7 +23,7 @@ for my $query ( @queries ) {
 
 	print "Warming Query : $query\n";
 	my $warmStart = time();
-	my $cmd="(/home/ec2-user/bigdata/trino/trino-server-370/bin/trino --server localhost:8080 --catalog hive -f ./$query)";
+	my $cmd="(/home/ec2-user/bigdata/trino-server-370/bin/trino --server localhost:8080 --catalog hive -f ./$query)";
 	my @warnoutput=`$cmd`;
 
 	my $warmEnd = time();
