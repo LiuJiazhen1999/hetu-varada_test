@@ -4,10 +4,10 @@ SELECT
 , "i_item_desc"
 , "i_current_price"
 FROM
-  hive.tpcds_parquet_1000.item
-, hive.tpcds_parquet_1000.inventory
-, hive.tpcds_parquet_1000.date_dim
-, hive.tpcds_parquet_1000.store_sales
+  varada.tpcds_parquet_1000.item
+, varada.tpcds_parquet_1000.inventory
+, varada.tpcds_parquet_1000.date_dim
+, varada.tpcds_parquet_1000.store_sales
 WHERE ("i_current_price" BETWEEN 62 AND (62 + 30))
    AND ("inv_item_sk" = "i_item_sk")
    AND ("d_date_sk" = "inv_date_sk")

@@ -20,10 +20,10 @@ WITH
       , ("cs_quantity" - COALESCE("cr_return_quantity", 0)) "sales_cnt"
       , ("cs_ext_sales_price" - COALESCE("cr_return_amount", DECIMAL '0.0')) "sales_amt"
       FROM
-        (((hive.tpcds_parquet_1000.catalog_sales
-      INNER JOIN hive.tpcds_parquet_1000.item ON ("i_item_sk" = "cs_item_sk"))
-      INNER JOIN hive.tpcds_parquet_1000.date_dim ON ("d_date_sk" = "cs_sold_date_sk"))
-      LEFT JOIN hive.tpcds_parquet_1000.catalog_returns ON ("cs_order_number" = "cr_order_number")
+        (((varada.tpcds_parquet_1000.catalog_sales
+      INNER JOIN varada.tpcds_parquet_1000.item ON ("i_item_sk" = "cs_item_sk"))
+      INNER JOIN varada.tpcds_parquet_1000.date_dim ON ("d_date_sk" = "cs_sold_date_sk"))
+      LEFT JOIN varada.tpcds_parquet_1000.catalog_returns ON ("cs_order_number" = "cr_order_number")
          AND ("cs_item_sk" = "cr_item_sk"))
       WHERE ("i_category" = 'Books                                             ')
 UNION       SELECT
@@ -35,10 +35,10 @@ UNION       SELECT
       , ("ss_quantity" - COALESCE("sr_return_quantity", 0)) "sales_cnt"
       , ("ss_ext_sales_price" - COALESCE("sr_return_amt", DECIMAL '0.0')) "sales_amt"
       FROM
-        (((hive.tpcds_parquet_1000.store_sales
-      INNER JOIN hive.tpcds_parquet_1000.item ON ("i_item_sk" = "ss_item_sk"))
-      INNER JOIN hive.tpcds_parquet_1000.date_dim ON ("d_date_sk" = "ss_sold_date_sk"))
-      LEFT JOIN hive.tpcds_parquet_1000.store_returns ON ("ss_ticket_number" = "sr_ticket_number")
+        (((varada.tpcds_parquet_1000.store_sales
+      INNER JOIN varada.tpcds_parquet_1000.item ON ("i_item_sk" = "ss_item_sk"))
+      INNER JOIN varada.tpcds_parquet_1000.date_dim ON ("d_date_sk" = "ss_sold_date_sk"))
+      LEFT JOIN varada.tpcds_parquet_1000.store_returns ON ("ss_ticket_number" = "sr_ticket_number")
          AND ("ss_item_sk" = "sr_item_sk"))
       WHERE ("i_category" = 'Books                                             ')
 UNION       SELECT
@@ -50,10 +50,10 @@ UNION       SELECT
       , ("ws_quantity" - COALESCE("wr_return_quantity", 0)) "sales_cnt"
       , ("ws_ext_sales_price" - COALESCE("wr_return_amt", DECIMAL '0.0')) "sales_amt"
       FROM
-        (((hive.tpcds_parquet_1000.web_sales
-      INNER JOIN hive.tpcds_parquet_1000.item ON ("i_item_sk" = "ws_item_sk"))
-      INNER JOIN hive.tpcds_parquet_1000.date_dim ON ("d_date_sk" = "ws_sold_date_sk"))
-      LEFT JOIN hive.tpcds_parquet_1000.web_returns ON ("ws_order_number" = "wr_order_number")
+        (((varada.tpcds_parquet_1000.web_sales
+      INNER JOIN varada.tpcds_parquet_1000.item ON ("i_item_sk" = "ws_item_sk"))
+      INNER JOIN varada.tpcds_parquet_1000.date_dim ON ("d_date_sk" = "ws_sold_date_sk"))
+      LEFT JOIN varada.tpcds_parquet_1000.web_returns ON ("ws_order_number" = "wr_order_number")
          AND ("ws_item_sk" = "wr_item_sk"))
       WHERE ("i_category" = 'Books                                             ')
    )  sales_detail

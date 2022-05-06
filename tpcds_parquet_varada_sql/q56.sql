@@ -5,14 +5,14 @@ WITH
      "i_item_id"
    , "sum"("ss_ext_sales_price") "total_sales"
    FROM
-     hive.tpcds_parquet_1000.store_sales
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.customer_address
-   , hive.tpcds_parquet_1000.item
+     varada.tpcds_parquet_1000.store_sales
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.customer_address
+   , varada.tpcds_parquet_1000.item
    WHERE ("i_item_id" IN (
       SELECT "i_item_id"
       FROM
-        hive.tpcds_parquet_1000.item
+        varada.tpcds_parquet_1000.item
       WHERE ("i_color" IN ('slate               '      , 'blanched            '      , 'burnished           '))
    ))
       AND ("ss_item_sk" = "i_item_sk")
@@ -28,14 +28,14 @@ WITH
      "i_item_id"
    , "sum"("cs_ext_sales_price") "total_sales"
    FROM
-     hive.tpcds_parquet_1000.catalog_sales
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.customer_address
-   , hive.tpcds_parquet_1000.item
+     varada.tpcds_parquet_1000.catalog_sales
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.customer_address
+   , varada.tpcds_parquet_1000.item
    WHERE ("i_item_id" IN (
       SELECT "i_item_id"
       FROM
-        hive.tpcds_parquet_1000.item
+        varada.tpcds_parquet_1000.item
       WHERE ("i_color" IN ('slate               '      , 'blanched            '      , 'burnished           '))
    ))
       AND ("cs_item_sk" = "i_item_sk")
@@ -51,14 +51,14 @@ WITH
      "i_item_id"
    , "sum"("ws_ext_sales_price") "total_sales"
    FROM
-     hive.tpcds_parquet_1000.web_sales
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.customer_address
-   , hive.tpcds_parquet_1000.item
+     varada.tpcds_parquet_1000.web_sales
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.customer_address
+   , varada.tpcds_parquet_1000.item
    WHERE ("i_item_id" IN (
       SELECT "i_item_id"
       FROM
-        hive.tpcds_parquet_1000.item
+        varada.tpcds_parquet_1000.item
       WHERE ("i_color" IN ('slate               '      , 'blanched            '      , 'burnished           '))
    ))
       AND ("ws_item_sk" = "i_item_sk")

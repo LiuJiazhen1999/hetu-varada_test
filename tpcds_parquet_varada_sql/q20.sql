@@ -5,12 +5,12 @@ SELECT
 , "i_category"
 , "i_class"
 , "i_current_price"
-, "sum"("cs_ext_sales_price") "hive.tpcds_parquet_1000.itemrevenue"
+, "sum"("cs_ext_sales_price") "varada.tpcds_parquet_1000.itemrevenue"
 , (("sum"("cs_ext_sales_price") * 100) / "sum"("sum"("cs_ext_sales_price")) OVER (PARTITION BY "i_class")) "revenueratio"
 FROM
-  hive.tpcds_parquet_1000.catalog_sales
-, hive.tpcds_parquet_1000.item
-, hive.tpcds_parquet_1000.date_dim
+  varada.tpcds_parquet_1000.catalog_sales
+, varada.tpcds_parquet_1000.item
+, varada.tpcds_parquet_1000.date_dim
 WHERE ("cs_item_sk" = "i_item_sk")
    AND ("i_category" IN ('Sports                                            ', 'Books                                             ', 'Home                                              '))
    AND ("cs_sold_date_sk" = "d_date_sk")

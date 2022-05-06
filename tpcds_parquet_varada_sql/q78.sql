@@ -9,10 +9,10 @@ WITH
    , "sum"("ws_wholesale_cost") "ws_wc"
    , "sum"("ws_sales_price") "ws_sp"
    FROM
-     ((hive.tpcds_parquet_1000.web_sales
-   LEFT JOIN hive.tpcds_parquet_1000.web_returns ON ("wr_order_number" = "ws_order_number")
+     ((varada.tpcds_parquet_1000.web_sales
+   LEFT JOIN varada.tpcds_parquet_1000.web_returns ON ("wr_order_number" = "ws_order_number")
       AND ("ws_item_sk" = "wr_item_sk"))
-   INNER JOIN hive.tpcds_parquet_1000.date_dim ON ("ws_sold_date_sk" = "d_date_sk"))
+   INNER JOIN varada.tpcds_parquet_1000.date_dim ON ("ws_sold_date_sk" = "d_date_sk"))
    WHERE ("wr_order_number" IS NULL)
    GROUP BY "d_year", "ws_item_sk", "ws_bill_customer_sk"
 ) 
@@ -25,10 +25,10 @@ WITH
    , "sum"("cs_wholesale_cost") "cs_wc"
    , "sum"("cs_sales_price") "cs_sp"
    FROM
-     ((hive.tpcds_parquet_1000.catalog_sales
-   LEFT JOIN hive.tpcds_parquet_1000.catalog_returns ON ("cr_order_number" = "cs_order_number")
+     ((varada.tpcds_parquet_1000.catalog_sales
+   LEFT JOIN varada.tpcds_parquet_1000.catalog_returns ON ("cr_order_number" = "cs_order_number")
       AND ("cs_item_sk" = "cr_item_sk"))
-   INNER JOIN hive.tpcds_parquet_1000.date_dim ON ("cs_sold_date_sk" = "d_date_sk"))
+   INNER JOIN varada.tpcds_parquet_1000.date_dim ON ("cs_sold_date_sk" = "d_date_sk"))
    WHERE ("cr_order_number" IS NULL)
    GROUP BY "d_year", "cs_item_sk", "cs_bill_customer_sk"
 ) 
@@ -41,10 +41,10 @@ WITH
    , "sum"("ss_wholesale_cost") "ss_wc"
    , "sum"("ss_sales_price") "ss_sp"
    FROM
-     ((hive.tpcds_parquet_1000.store_sales
-   LEFT JOIN hive.tpcds_parquet_1000.store_returns ON ("sr_ticket_number" = "ss_ticket_number")
+     ((varada.tpcds_parquet_1000.store_sales
+   LEFT JOIN varada.tpcds_parquet_1000.store_returns ON ("sr_ticket_number" = "ss_ticket_number")
       AND ("ss_item_sk" = "sr_item_sk"))
-   INNER JOIN hive.tpcds_parquet_1000.date_dim ON ("ss_sold_date_sk" = "d_date_sk"))
+   INNER JOIN varada.tpcds_parquet_1000.date_dim ON ("ss_sold_date_sk" = "d_date_sk"))
    WHERE ("sr_ticket_number" IS NULL)
    GROUP BY "d_year", "ss_item_sk", "ss_customer_sk"
 ) 

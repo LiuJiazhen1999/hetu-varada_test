@@ -6,9 +6,9 @@ WITH
    , "sum"("ss_ext_sales_price") "sales"
    , "sum"("ss_net_profit") "profit"
    FROM
-     hive.tpcds_parquet_1000.store_sales
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.store
+     varada.tpcds_parquet_1000.store_sales
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.store
    WHERE ("ss_sold_date_sk" = "d_date_sk")
       AND ("d_date" BETWEEN CAST('2000-08-23' AS DATE) AND (CAST('2000-08-23' AS DATE) + INTERVAL  '30' DAY))
       AND ("ss_store_sk" = "s_store_sk")
@@ -20,9 +20,9 @@ WITH
    , "sum"("sr_return_amt") "returns"
    , "sum"("sr_net_loss") "profit_loss"
    FROM
-     hive.tpcds_parquet_1000.store_returns
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.store
+     varada.tpcds_parquet_1000.store_returns
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.store
    WHERE ("sr_returned_date_sk" = "d_date_sk")
       AND ("d_date" BETWEEN CAST('2000-08-23' AS DATE) AND (CAST('2000-08-23' AS DATE) + INTERVAL  '30' DAY))
       AND ("sr_store_sk" = "s_store_sk")
@@ -34,8 +34,8 @@ WITH
    , "sum"("cs_ext_sales_price") "sales"
    , "sum"("cs_net_profit") "profit"
    FROM
-     hive.tpcds_parquet_1000.catalog_sales
-   , hive.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_1000.catalog_sales
+   , varada.tpcds_parquet_1000.date_dim
    WHERE ("cs_sold_date_sk" = "d_date_sk")
       AND ("d_date" BETWEEN CAST('2000-08-23' AS DATE) AND (CAST('2000-08-23' AS DATE) + INTERVAL  '30' DAY))
    GROUP BY "cs_call_center_sk"
@@ -46,8 +46,8 @@ WITH
    , "sum"("cr_return_amount") "returns"
    , "sum"("cr_net_loss") "profit_loss"
    FROM
-     hive.tpcds_parquet_1000.catalog_returns
-   , hive.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_1000.catalog_returns
+   , varada.tpcds_parquet_1000.date_dim
    WHERE ("cr_returned_date_sk" = "d_date_sk")
       AND ("d_date" BETWEEN CAST('2000-08-23' AS DATE) AND (CAST('2000-08-23' AS DATE) + INTERVAL  '30' DAY))
    GROUP BY "cr_call_center_sk"
@@ -58,9 +58,9 @@ WITH
    , "sum"("ws_ext_sales_price") "sales"
    , "sum"("ws_net_profit") "profit"
    FROM
-     hive.tpcds_parquet_1000.web_sales
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.web_page
+     varada.tpcds_parquet_1000.web_sales
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.web_page
    WHERE ("ws_sold_date_sk" = "d_date_sk")
       AND ("d_date" BETWEEN CAST('2000-08-23' AS DATE) AND (CAST('2000-08-23' AS DATE) + INTERVAL  '30' DAY))
       AND ("ws_web_page_sk" = "wp_web_page_sk")
@@ -72,9 +72,9 @@ WITH
    , "sum"("wr_return_amt") "returns"
    , "sum"("wr_net_loss") "profit_loss"
    FROM
-     hive.tpcds_parquet_1000.web_returns
-   , hive.tpcds_parquet_1000.date_dim
-   , hive.tpcds_parquet_1000.web_page
+     varada.tpcds_parquet_1000.web_returns
+   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_1000.web_page
    WHERE ("wr_returned_date_sk" = "d_date_sk")
       AND ("d_date" BETWEEN CAST('2000-08-23' AS DATE) AND (CAST('2000-08-23' AS DATE) + INTERVAL  '30' DAY))
       AND ("wr_web_page_sk" = "wp_web_page_sk")
@@ -89,7 +89,7 @@ SELECT
 FROM
   (
    SELECT
-     'hive.tpcds_parquet_1000.store channel' "channel"
+     'varada.tpcds_parquet_1000.store channel' "channel"
    , "ss"."s_store_sk" "id"
    , "sales"
    , COALESCE("returns", 0) "returns"

@@ -4,10 +4,10 @@ SELECT
 , "sum"("cs_ext_ship_cost") "total shipping cost"
 , "sum"("cs_net_profit") "total net profit"
 FROM
-  hive.tpcds_parquet_1000.catalog_sales cs1
-, hive.tpcds_parquet_1000.date_dim
-, hive.tpcds_parquet_1000.customer_address
-, hive.tpcds_parquet_1000.call_center
+  varada.tpcds_parquet_1000.catalog_sales cs1
+, varada.tpcds_parquet_1000.date_dim
+, varada.tpcds_parquet_1000.customer_address
+, varada.tpcds_parquet_1000.call_center
 WHERE ("d_date" BETWEEN CAST('2002-2-01' AS DATE) AND (CAST('2002-2-01' AS DATE) + INTERVAL  '60' DAY))
    AND ("cs1"."cs_ship_date_sk" = "d_date_sk")
    AND ("cs1"."cs_ship_addr_sk" = "ca_address_sk")
@@ -17,14 +17,14 @@ WHERE ("d_date" BETWEEN CAST('2002-2-01' AS DATE) AND (CAST('2002-2-01' AS DATE)
    AND (EXISTS (
    SELECT *
    FROM
-     hive.tpcds_parquet_1000.catalog_sales cs2
+     varada.tpcds_parquet_1000.catalog_sales cs2
    WHERE ("cs1"."cs_order_number" = "cs2"."cs_order_number")
       AND ("cs1"."cs_warehouse_sk" <> "cs2"."cs_warehouse_sk")
 ))
    AND (NOT (EXISTS (
    SELECT *
    FROM
-     hive.tpcds_parquet_1000.catalog_returns cr1
+     varada.tpcds_parquet_1000.catalog_returns cr1
    WHERE ("cs1"."cs_order_number" = "cr1"."cr_order_number")
 )))
 ORDER BY "count"(DISTINCT "cs_order_number") ASC

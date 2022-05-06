@@ -8,14 +8,14 @@ SELECT
 , "sum"("sr_return_quantity") "store_returns_quantity"
 , "sum"("cs_quantity") "catalog_sales_quantity"
 FROM
-  hive.tpcds_parquet_1000.store_sales
-, hive.tpcds_parquet_1000.store_returns
-, hive.tpcds_parquet_1000.catalog_sales
-, hive.tpcds_parquet_1000.date_dim d1
-, hive.tpcds_parquet_1000.date_dim d2
-, hive.tpcds_parquet_1000.date_dim d3
-, hive.tpcds_parquet_1000.store
-, hive.tpcds_parquet_1000.item
+  varada.tpcds_parquet_1000.store_sales
+, varada.tpcds_parquet_1000.store_returns
+, varada.tpcds_parquet_1000.catalog_sales
+, varada.tpcds_parquet_1000.date_dim d1
+, varada.tpcds_parquet_1000.date_dim d2
+, varada.tpcds_parquet_1000.date_dim d3
+, varada.tpcds_parquet_1000.store
+, varada.tpcds_parquet_1000.item
 WHERE ("d1"."d_moy" = 9)
    AND ("d1"."d_year" = 1999)
    AND ("d1"."d_date_sk" = "ss_sold_date_sk")
