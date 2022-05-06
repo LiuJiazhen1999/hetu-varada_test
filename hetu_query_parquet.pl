@@ -13,7 +13,7 @@ my $SCRIPT_PATH = dirname( __FILE__ );
 open(HETU_PARQUET_QUERY_LOG, ">hetu_parquet_query.log") or die "can not open hetu_parquet_query.log";
 
 chdir $SCRIPT_PATH;
-chdir 'tpcds_parquet_sql';
+chdir 'hetu_tpcds_parquet_sql';
 my @queries = glob '*.sql';
 for my $query ( @queries ) {
 
