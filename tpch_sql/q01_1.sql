@@ -11,7 +11,7 @@ SELECT
   avg(l.discount)                                       AS avg_disc,
   count(*)                                              AS count_order
 FROM
-  hive.tpch_parquet_100.lineitemsub AS l
+  hive.tpch_parquet_1000.lineitemsub AS l
 GROUP BY
   l.returnflag,
   l.linestatus
