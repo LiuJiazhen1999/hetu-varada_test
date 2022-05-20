@@ -14,7 +14,8 @@ open(TRINO_TPCH_QUERY_LOG, ">trino_tpch_query.log") or die "can not open trino_t
 
 chdir $SCRIPT_PATH;
 chdir 'tpch_sql';
-my @queries = glob '*.sql';
+#my @queries = glob '*.sql';
+my @queries = ("create.sql", "q01.sql", "q01_1.sql");
 for my $query ( @queries ) {
 
 	print "parquet query : $query start \n";
