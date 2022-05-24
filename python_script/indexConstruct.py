@@ -93,7 +93,7 @@ if __name__ == "__main__":
                       "supplier": [["suppkey", "nationkey", "acctbal"], ["int", "int", "float"]],
                       "partsupp": [["partkey", "suppkey", "availqty", "supplycost"], ["int", "int", "int", "float"]],
                       "customer": [["custkey", "nationkey", "acctbal"], ["int", "int", "float"]],
-                      "order": [["orderkey", "custkey", "totalprice", "orderdate", "shippriority"], ["int", "int", "float", "date", "int"]]}
+                      "orders": [["orderkey", "custkey", "totalprice", "orderdate", "shippriority"], ["int", "int", "float", "date", "int"]]}
     for _table in _tables:
         if not os.path.exists(index_dir + _table):
             os.makedirs(index_dir + _table)
