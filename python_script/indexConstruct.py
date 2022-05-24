@@ -99,4 +99,4 @@ if __name__ == "__main__":
             os.makedirs(index_dir + _table)
         _files = os.listdir(file_dir + _table)
         _files = [file_dir + _table + "/" + file for file in _files]
-        constructORCLikeIndex(index_dir + _table + "/", _files, tpch_table_set.get(_table)[0], tpch_table_set.get(_table)[1])
+        constructORCLikeIndex(index_dir + _table + "/", _files, tpch_table_set[str(_table)][0], tpch_table_set[str(_table)][1])
