@@ -53,7 +53,7 @@ if __name__=="__main__":
     origin_file_dir += "/"
     origin_tables = os.listdir(origin_file_dir)
     for origin_table in origin_tables:
-        if not os.path.exists(rewrite_dir + origin_table)
+        if not os.path.exists(rewrite_dir + origin_table):
             os.makedirs(rewrite_dir + origin_table)
         _files = os.listdir(origin_file_dir + origin_table)
         for _file in _files:
