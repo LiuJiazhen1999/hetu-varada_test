@@ -56,6 +56,6 @@ if __name__=="__main__":
         os.makedirs(rewrite_dir + origin_table)
         _files = os.listdir(origin_file_dir + origin_table)
         for _file in _files:
-            _table = pq.read_table(origin_file_dir + origin_table + _file)
+            _table = pq.read_table(origin_file_dir + origin_table + "/" + _file)
             # _table = arrow_sort_values(_table, by=["shipdate"])
-            pq.write_table(_table, rewrite_dir + origin_table + _file, row_group_size=1000)
+            pq.write_table(_table, rewrite_dir + origin_table + "/" + _file, row_group_size=1000)
