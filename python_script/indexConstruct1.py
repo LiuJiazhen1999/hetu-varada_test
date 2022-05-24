@@ -49,11 +49,18 @@ def constructORCLikeIndex(orc_index_dir_path, files, _columns, _columns_type):
                 _column_type = _columns_type[_index]
                 rg_min_value, rg_max_value = get_sys_min_max_value(_column_type)
                 rg_index_writer = open(orc_index_dir_path + file.split("/")[-1] + "_" + _column, "a+", encoding="UTF-8")
+                _none_flag = False
                 for _ in row_group_contents.column(_column):
                     _ = str(_)
+                    if _ is None:
+                        _none_flag = True
+                        break
                     rg_min_value = get_min_max_value(_column_type, _, rg_min_value)[0]
                     rg_max_value = get_min_max_value(_column_type, _, rg_max_value)[1]
-                rg_index_writer.write(file + " " + str(row_group_index) + " " + str(rg_min_value) + " " + str(rg_max_value) + "\n")
+                if _none_flag:
+                    rg_index_writer.write(file + " " + str(row_group_index) + " " + str("None") + " " + str("None") + "\n")
+                else:
+                    rg_index_writer.write(file + " " + str(row_group_index) + " " + str(rg_min_value) + " " + str(rg_max_value) + "\n")
                 rg_index_writer.close()
 
 def isValueIn(line, predict_express):
