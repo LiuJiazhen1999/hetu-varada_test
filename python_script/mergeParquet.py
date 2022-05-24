@@ -48,18 +48,14 @@ def combine_parquet_files(input_folder, target_path):
         print(e)
 
 if __name__=="__main__":
-    file_dir = "/mydata/tpch_1000/lineitem/"
-    sorted_dir = "/mydata/tpch_1000/lineitemsorted/"
-    files = os.listdir(file_dir)
-    if not file_dir.endswith("/"):
-        file_dir += "/"
-    files = [file_dir + _ for _ in files]
-    #combine_parquet_files('/mydata/lineitem_100/lineitem', 'combined.parquet')
-    for file in files:
-        _table = pq.read_table(file)
-        _table = arrow_sort_values(_table, by=["shipdate"])
-        pq.write_table(_table, sorted_dir + file.split("/")[-1], row_group_size=10000)
-    # df = pd.DataFrame({"x": [1, 4, 2, 3], "y": [1.1, 4.4, 2.2, 3.3]})
-    # table = pa.Table.from_pandas(df)
-    # table_sorted = arrow_sort_values(table, by=["x"])
-    # df_sorted = table_sorted.to_pandas()
+    origin_file_dir = "/mydata/tpch_parquet_300.db"
+    rewrite_dir = origin_file_dir + "_rewrite/"
+    origin_file_dir += "/"
+    origin_tables = os.listdir(origin_file_dir)
+    for origin_table in origin_tables:
+        os.makedirs(rewrite_dir + origin_table)
+        _files = os.listdir(origin_file_dir + origin_table)
+        for _file in _files:
+            _table = pq.read_table(origin_file_dir + origin_table + _file)
+            # _table = arrow_sort_values(_table, by=["shipdate"])
+            pq.write_table(_table, rewrite_dir + origin_table + _file, row_group_size=1000)
