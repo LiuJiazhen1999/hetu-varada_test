@@ -42,6 +42,8 @@ tpcds_table_set = {'call_center': [['cc_call_center_sk', 'cc_rec_start_date', 'c
 
 def draw_scatter(file, s):
     data = np.loadtxt(file, encoding='utf-8', delimiter=' ', dtype=str)
+    if data.ndim < 2:
+        return 
     x1 = data[:, 2]#横坐标代表min
     y1 = data[:, 3]#纵坐标代表max
     x1 = [float(value) for value in x1]
@@ -57,6 +59,8 @@ def draw_scatter(file, s):
 
 def draw_scatter_date(file, s):
     data = np.loadtxt(file, encoding='utf-8', delimiter=' ', dtype=str)
+    if data.ndim < 2:
+        return
     x1 = data[:, 2]#横坐标代表min
     y1 = data[:, 3]#纵坐标代表max
     x1 = [datetime.date(int(value.split("-")[0]), int(value.split("-")[1]), int(value.split("-")[2])) for value in x1]
