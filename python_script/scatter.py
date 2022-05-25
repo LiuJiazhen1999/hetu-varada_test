@@ -149,6 +149,9 @@ if __name__ == "__main__":
     for _file in _files:
         _table = _file.split("/")[-2]
         _column = _file.split("_")[-1]
+        print(_file)
+        print(_table)
+        print(_column)
         print(tpc_table_set[_table][0])
         _index = tpc_table_set[_table][0].index(_column)
         _type = tpc_table_set[_table][1][_index]
