@@ -78,7 +78,9 @@ if __name__ == "__main__":
         _files = os.listdir(_path)
         _files = [_path + _file for _file in _files]
         for _file in _files:
-            _column = _file.split("_")[-1]
+            #_column = _file.split("_")[-1]
+            _temp =  _file.split("-")[-1]
+            _column = _temp[_temp.index("_") + 1 : -1]
             print(_file)
             print(_column)
             print(_table)
