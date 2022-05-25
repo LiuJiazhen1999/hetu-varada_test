@@ -53,6 +53,7 @@ def draw_scatter(file, s):
     ax1.set_ylabel('max-value')
     ax1.scatter(x1, y1, s=s, c='k', marker='.')
     plt.savefig(file + ".png")
+    plt.close()
 
 def draw_scatter_date(file, s):
     data = np.loadtxt(file, encoding='utf-8', delimiter=' ', dtype=str)
@@ -67,10 +68,11 @@ def draw_scatter_date(file, s):
     ax1.set_ylabel('max-value')
     ax1.scatter(x1, y1, s=s, c='k', marker='.')
     plt.savefig(file + ".png")
+    plt.close()
 
 
 if __name__ == "__main__":
-    _path = "/mydata/tpch_parquet_300.db_rewrite_index/customer/"
+    _path = "/mydata/tpch_parquet_300.db_rewrite_index/lineitem/"
     _files = os.listdir(_path)
     _files = [_path + _file for _file in _files]
     for _file in _files:
