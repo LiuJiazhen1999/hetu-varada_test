@@ -52,7 +52,7 @@ def draw_scatter(file, s):
     ax1.set_xlabel('min-value')
     ax1.set_ylabel('max-value')
     ax1.scatter(x1, y1, s=s, c='k', marker='.')
-    plt.show()
+    plt.savefig(file + ".png")
 
 def draw_scatter_date(file, s):
     data = np.loadtxt(file, encoding='utf-8', delimiter=' ', dtype=str)
