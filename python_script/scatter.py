@@ -72,15 +72,16 @@ def draw_scatter_date(file, s):
 
 
 if __name__ == "__main__":
-    _path = "/mydata/tpch_parquet_300.db_rewrite_index/lineitem/"
-    _files = os.listdir(_path)
-    _files = [_path + _file for _file in _files]
-    for _file in _files:
-        _table = _file.split("/")[-2]
-        _column = _file.split("_")[-1]
-        _index = tpch_table_set[_table][0].index(_column)
-        _type = tpch_table_set[_table][1][_index]
-        if _type == "date":
-            draw_scatter_date(_file, 20)
-        else:
-            draw_scatter(_file, 20)
+    _tables = os.listdir("/mydata/tpcds_parquet_300.db_rewrite_index/")
+    for _table in _tables:
+        _path = "/mydata/tpcds_parquet_300.db_rewrite_index/" + _table + "/"
+        _files = os.listdir(_path)
+        _files = [_path + _file for _file in _files]
+        for _file in _files:
+            _column = _file.split("_")[-1]
+            _index = tpcds_table_set[_table][0].index(_column)
+            _type = tpcds_table_set[_table][1][_index]
+            if _type == "date":
+                draw_scatter_date(_file, 20)
+            else:
+                draw_scatter(_file, 20)
