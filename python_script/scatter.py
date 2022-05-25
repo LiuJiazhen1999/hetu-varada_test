@@ -79,6 +79,9 @@ if __name__ == "__main__":
         _files = [_path + _file for _file in _files]
         for _file in _files:
             _column = _file.split("_")[-1]
+            print(_file)
+            print(_column)
+            print(_table)
             _index = tpcds_table_set[_table][0].index(_column)
             _type = tpcds_table_set[_table][1][_index]
             if _type == "date":
