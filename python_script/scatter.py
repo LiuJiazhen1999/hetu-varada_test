@@ -133,8 +133,6 @@ def draw_scatter_date(file, s):
     y1 = data[:, 3]#纵坐标代表max
     x1 = [datetime.date(int(value.split("-")[0]), int(value.split("-")[1]), int(value.split("-")[2])) for value in x1]
     y1 = [datetime.date(int(value.split("-")[0]), int(value.split("-")[1]), int(value.split("-")[2])) for value in y1]
-    print(x1)
-    print(y1)
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
     ax1.set_title('Result Analysis')
@@ -151,6 +149,7 @@ if __name__ == "__main__":
     for _file in _files:
         _table = _file.split("/")[-2]
         _column = _file.split("_")[-1]
+        print(tpc_table_set[_table][0])
         _index = tpc_table_set[_table][0].index(_column)
         _type = tpc_table_set[_table][1][_index]
         if _type == "date":
