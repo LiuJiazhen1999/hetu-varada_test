@@ -41,9 +41,11 @@ tpcds_table_set = {'call_center': [['cc_call_center_sk', 'cc_rec_start_date', 'c
                        'web_site': [['web_site_sk', 'web_rec_start_date', 'web_rec_end_date', 'web_open_date_sk', 'web_close_date_sk', 'web_mkt_id', 'web_company_id', 'web_gmt_offset', 'web_tax_percentage'], ['int', 'date', 'date', 'int', 'int', 'int', 'int', 'float', 'float']]}
 
 def draw_scatter(file, s):
-    data = np.loadtxt(file, encoding='utf-8', delimiter=' ', dtype=float)
+    data = np.loadtxt(file, encoding='utf-8', delimiter=' ', dtype=str)
     x1 = data[:, 2]#横坐标代表min
     y1 = data[:, 3]#纵坐标代表max
+    x1 = [float(value) for value in x1]
+    y1 = [float(value) for value in y1]
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
     ax1.set_title('Result Analysis')
