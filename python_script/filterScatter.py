@@ -16,7 +16,7 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     x2 = []#(x2, y2)符合条件的row group的(_min, _max)，深色
     y2 = []
     for row_group_index in range(num_of_row_groups):
-        row_group_contents = _table.read_row_group(row_group_index, column=[column])
+        row_group_contents = _table.read_row_group(row_group_index, columns=[column])
         _min, _max = get_sys_min_max_value(column_type)
         _flag = False
         for _ in row_group_contents:
