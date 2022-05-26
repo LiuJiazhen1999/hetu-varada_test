@@ -26,7 +26,7 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
                 if(_start == str(_)):
                     _flag = True
             else:
-                if get_sys_min_max_value(column_type, str(_), _start)[0] == _start and get_sys_min_max_value(column_type, str(_), _end)[1] == _end:
+                if get_min_max_value(column_type, str(_), _start)[0] == _start and get_min_max_value(column_type, str(_), _end)[1] == _end:
                     _flag = True
             if(column_type == "date"):
                 _x = datetime.date(int(_min.split("-")[0]), int(_min.split("-")[1]), int(_min.split("-")[2]))
