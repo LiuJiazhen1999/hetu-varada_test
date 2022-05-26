@@ -19,9 +19,9 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
         row_group_contents = _table.read_row_group(row_group_index, columns=[column])
         _min, _max = get_sys_min_max_value(column_type)
         _flag = False
-        for _ in row_group_contents:
-            _min= get_min_max_value(column_type, str(_), _min)[0]
-            _max= get_min_max_value(column_type, str(_), _max)[1]
+        for _ in row_group_contents.column(column):
+            _min = get_min_max_value(column_type, str(_), _min)[0]
+            _max = get_min_max_value(column_type, str(_), _max)[1]
             if _start == _end:
                 if(_start == str(_)):
                     _flag = True
@@ -51,7 +51,7 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     plt.close()
 
 if __name__ == "__main__":
-    draw_scatter("/mydata/tpch_parquet_300.db/customer/20220524_064704_00027_fs53m_1af48bb7-7f26-4364-8cca-751850202710",
+    draw_scatter("/mydata/tpch_parquet_300.db_rewrite/customer/20220524_064704_00027_fs53m_1af48bb7-7f26-4364-8cca-751850202710",
                  10,
                  "acctbal",
                  "float",
