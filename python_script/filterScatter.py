@@ -28,19 +28,19 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
             else:
                 if get_min_max_value(column_type, str(_), _start)[0] == _start and get_min_max_value(column_type, str(_), _end)[1] == _end:
                     _flag = True
-            if(column_type == "date"):
-                _x = datetime.date(int(_min.split("-")[0]), int(_min.split("-")[1]), int(_min.split("-")[2]))
-                _y = datetime.date(int(_max.split("-")[0]), int(_max.split("-")[1]), int(_max.split("-")[2]))
-            else:
-                _x = float(_min)
-                _y = float(_max)
-            if _flag:
-                x2.append(_x)
-                y2.append(_y)
-            else:
-                x1.append(_x)
-                y1.append(_y)
-            print(str(row_group_index) + "-" + str(_min) + "-" + str(_max))
+        if(column_type == "date"):
+            _x = datetime.date(int(_min.split("-")[0]), int(_min.split("-")[1]), int(_min.split("-")[2]))
+            _y = datetime.date(int(_max.split("-")[0]), int(_max.split("-")[1]), int(_max.split("-")[2]))
+        else:
+            _x = float(_min)
+            _y = float(_max)
+        if _flag:
+            x2.append(_x)
+            y2.append(_y)
+        else:
+            x1.append(_x)
+            y1.append(_y)
+        #print(str(row_group_index) + "-" + str(_min) + "-" + str(_max))
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
     ax1.set_title('Result Analysis')
