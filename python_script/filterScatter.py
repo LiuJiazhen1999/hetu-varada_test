@@ -40,7 +40,7 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
             else:
                 x1.append(_x)
                 y1.append(_y)
-		print(str(row_group_index) + "-" + str(_min) + "-" + str(_max))
+            print(str(row_group_index) + "-" + str(_min) + "-" + str(_max))
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
     ax1.set_title('Result Analysis')
