@@ -74,9 +74,10 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     plt.close()
 
 if __name__ == "__main__":
-    draw_scatter("/mydata/tpch_parquet_300.db_rewrite/customer/20220524_064704_00027_fs53m_1af48bb7-7f26-4364-8cca-751850202710",
+    for i in range(-2, 9):
+        draw_scatter("/mydata/tpch_parquet_300.db_rewrite/customer/20220524_064704_00027_fs53m_1af48bb7-7f26-4364-8cca-751850202710",
                  10,
                  "acctbal",
                  "float",
-                 "9000",
-                 "10000")
+                 str(i*1000),
+                 str((i+1)*1000))
