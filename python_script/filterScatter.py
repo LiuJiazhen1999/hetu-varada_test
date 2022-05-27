@@ -6,7 +6,29 @@ import numpy as np
 
 from indexConstruct import get_sys_min_max_value, get_min_max_value
 
+def is_lt(column_type, value1, value2):
+    if(column_type == "date"):
+        return datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]), int(value1.split("-")[2])) <= datetime.date(int(value2.split("-")[0]), int(value2.split("-")[1]), int(value2.split("-")[2]))
+    else:
+        return float(value1) <= float(value2)
 
+def is_gt(column_type, value1, value2):
+    if(column_type == "date"):
+        return datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]),
+                             int(value1.split("-")[2])) >= datetime.date(int(value2.split("-")[0]),
+                                                                         int(value2.split("-")[1]),
+                                                                         int(value2.split("-")[2]))
+    else:
+        return float(value1) >= float(value2)
+
+def is_eq(column_type, value1, value2):
+    if (column_type == "date"):
+        return datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]),
+                             int(value1.split("-")[2])) == datetime.date(int(value2.split("-")[0]),
+                                                                         int(value2.split("-")[1]),
+                                                                         int(value2.split("-")[2]))
+    else:
+        return float(value1) == float(value2)
 
 def draw_scatter(file, dot_size, column, column_type, _start, _end):
     _table = pp.ParquetFile(file)
@@ -23,10 +45,10 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
             _min = get_min_max_value(column_type, str(_), _min)[0]
             _max = get_min_max_value(column_type, str(_), _max)[1]
             if _start == _end:
-                if(_start == str(_)):
+                if(is_eq(column_type, _start, str(_))):
                     _flag = True
             else:
-                if get_min_max_value(column_type, str(_), _start)[0] == _start and get_min_max_value(column_type, str(_), _end)[1] == _end:
+                if is_lt(column_type, _start, str(_)) and is_gt(column_type, _end, str(_)):
                     _flag = True
         if(column_type == "date"):
             _x = datetime.date(int(_min.split("-")[0]), int(_min.split("-")[1]), int(_min.split("-")[2]))
@@ -47,6 +69,7 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     ax1.set_xlabel('min-value')
     ax1.set_ylabel('max-value')
     ax1.scatter(x1, y1, s=dot_size, c='lightgrey', marker='.')
+    print(x2)
     ax1.scatter(x2, y2, s=dot_size, c='k', marker='.')
     plt.savefig(file + ".png")
     plt.close()
@@ -56,5 +79,5 @@ if __name__ == "__main__":
                  10,
                  "acctbal",
                  "float",
-                 "5000",
-                 "5001")
+                 "9000",
+                 "10000")
