@@ -69,9 +69,8 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     ax1.set_xlabel('min-value')
     ax1.set_ylabel('max-value')
     ax1.scatter(x1, y1, s=dot_size, c='lightgrey', marker='.')
-    print(x2)
     ax1.scatter(x2, y2, s=dot_size, c='k', marker='.')
-    plt.savefig(file + ".png")
+    plt.savefig(file + column + "_" + _start + "-" + _end + ".png")
     plt.close()
 
 if __name__ == "__main__":
