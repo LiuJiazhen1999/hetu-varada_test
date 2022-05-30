@@ -65,7 +65,7 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
         #print(str(row_group_index) + "-" + str(_min) + "-" + str(_max))
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
-    ax1.set_title('Result Analysis')
+    ax1.set_title("Fit percent:" + str(len(x2)/(len(x1) + len(x2))))
     ax1.set_xlabel('min-value')
     ax1.set_ylabel('max-value')
     ax1.scatter(x1, y1, s=dot_size, c='lightgrey', marker='.')
@@ -74,142 +74,74 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     plt.close()
 
 if __name__ == "__main__":
-    # for i in range(1, 7):
-    #         draw_scatter(
-    #         "/mydata/tpch_parquet_300.db_rewrite/orders/20220524_062839_00026_fs53m_66cba92c-a213-4e48-ab15-5b37a5bb0daa",
-    #         10,
-    #         "orderdate",
-    #         "date",
-    #         "199" + str(i) + "-3-1",
-    #         "199" + str(i) + "-3-1")
+    file_name = "20220524_040257_00019_fs53m_0ac223b1-073d-419a-a423-a83527104d5b"
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
+        10, "shipdate", "date",
+        str("1992-1-1"),
+        str("1992-2-1"))
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
+        10, "shipdate", "date",
+        str("1992-1-1"),
+        str("1992-3-1"))
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
+        10, "extendedprice", "float",
+        str("40000"),
+        str("40010"))
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
+        10, "extendedprice", "float",
+        str("40000"),
+        str("40100"))
 
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_returned_date_sk",
-                 "float",
-                 str(2450750 + i * 100),
-                 str(2450750 + (i + 1) * 100))
+    file_name = "20220524_064704_00027_fs53m_1af48bb7-7f26-4364-8cca-751850202710"
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/customer/" + file_name,
+        10, "acctbal", "float",
+        str("1000"),
+        str("1010"))
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/customer/" + file_name,
+        10, "acctbal", "float",
+        str("1000"),
+        str("1100"))
+    draw_scatter(
+        "/mydata/tpch_parquet_300.db_rewrite/customer/" + file_name,
+        10, "custkey", "float",
+        str("20000000"),
+        str("20100000"))
 
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_returned_date_sk",
-                 "float",
-                 str(2450750 + i * 250),
-                 str(2450750 + i * 250))
+    file_name = "20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887"
+    draw_scatter(
+        "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/" + file_name,
+        10, "cs_net_paid_inc_ship", "float",
+        str("20000"),
+        str("20000"))
+    draw_scatter(
+        "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/" + file_name,
+        10, "cs_net_profit", "float",
+        str("10000"),
+        str("10500"))
 
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_returned_time_sk",
-                 "float",
-                 str(i * 10000),
-                 str(i * 10000 + 1000))
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_returned_time_sk",
-                 "float",
-                 str(i * 10000 + 2000),
-                 str(i * 10000 + 2000))
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_item_sk",
-                 "float",
-                 str(i * 30000),
-                 str(i * 30000 + 5000))
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_item_sk",
-                 "float",
-                 str(i * 30000 + 3000),
-                 str(i * 30000 + 3000))
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_order_number",
-                 "float",
-                 str(i * 5000000),
-                 str(i * 5000000 + 10000))
-    for i in range(0, 7):
-            draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399",
-                 10,
-                 "cr_order_number",
-                 "float",
-                 str(i * 5000000 + 3000),
-                 str(i * 5000000 + 3000))
+    file_name = "20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399"
+    draw_scatter(
+        "/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name,
+        10, "cr_item_sk", "float",
+        str("120000"),
+        str("125000"))
+    draw_scatter(
+        "/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name,
+        10, "cr_returned_time_sk", "float",
+        str("20000"),
+        str("21000"))
 
-    # for i in range(0, 7):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_order_number",
-    #              "float",
-    #              str(i * 5000000),
-    #              str(i * 5000000 + 10000))
-    # for i in range(0, 7):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_order_number",
-    #              "float",
-    #              str(i * 5000000 + 3000),
-    #              str(i * 5000000 + 3000))
-    # for i in range(-2, 4):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_net_profit",
-    #              "float",
-    #              str(i * 5000),
-    #              str(i * 5000 + 500))
-    # for i in range(-2, 4):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_net_profit",
-    #              "float",
-    #              str(i * 5000 + 300),
-    #              str(i * 5000 + 300))
-    # for i in range(0, 8):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_net_paid_inc_ship_tax",
-    #              "float",
-    #              str(i * 5000),
-    #              str(i * 5000 + 500))
-    # for i in range(0, 8):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_net_paid_inc_ship_tax",
-    #              "float",
-    #              str(i * 5000 + 300),
-    #              str(i * 5000 + 300))
-    # for i in range(0, 7):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_net_paid_inc_ship",
-    #              "float",
-    #              str(i * 5000),
-    #              str(i * 5000 + 500))
-    # for i in range(0, 7):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887",
-    #              10,
-    #              "cs_net_paid_inc_ship",
-    #              "float",
-    #              str(i * 5000 + 300),
-    #              str(i * 5000 + 300))
-    #
-    # for i in range(0, 7):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/customer_address/20220523_141210_00007_fs53m_f74350a2-39bd-4d7c-966f-2d691ea63d0a",
-    #              10,
-    #              "ca_address_sk",
-    #              "float",
-    #              str(i * 300000),
-    #              str(i * 300000 + 30000))
-    # for i in range(0, 7):
-    #         draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/customer_address/20220523_141210_00007_fs53m_f74350a2-39bd-4d7c-966f-2d691ea63d0a",
-    #              10,
-    #              "ca_address_sk",
-    #              "float",
-    #              str(i * 300000 + 300),
-    #              str(i * 300000 + 300))
+    file_name = "20220523_141210_00007_fs53m_f74350a2-39bd-4d7c-966f-2d691ea63d0a"
+    draw_scatter(
+        "/mydata/tpcds_parquet_300.db_rewrite/customer_address/" + file_name,
+        10, "ca_address_sk", "float",
+        str("600000"),
+        str("630000"))
+
+
