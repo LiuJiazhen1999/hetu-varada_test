@@ -56,6 +56,10 @@ if __name__=="__main__":
     _jaccard = com_jaccard(file_path, column_name, column_type)
     print(file_path + "~" + column_name + "~" + str(_jaccard))#这个percent是1.0
 
+    column_name = "cr_returned_date"
+    _jaccard = com_jaccard(file_path, column_name, column_type)
+    print(file_path + "~" + column_name + "~" + str(_jaccard))  # 这个percent未知，看起来在1/4左右
+
     file_path = "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887"
     column_name = "cs_net_paid_inc_ship"
     _jaccard = com_jaccard(file_path, column_name, column_type)
