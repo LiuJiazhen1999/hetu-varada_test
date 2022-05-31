@@ -22,6 +22,8 @@ def com_jaccard(file_path, column_name, rg_index1, rg_index2):
     rg1_content = _table.read_row_group(rg_index1, columns=[column_name])
     for _ in rg1_content.column(column_name):
         _ = str(_)
+        if(type(eval(_)) == float):
+            _ = str(int(_))
         union_num += 1
         if _ not in rg1_dict:
             rg1_dict[_] = 0
@@ -30,6 +32,8 @@ def com_jaccard(file_path, column_name, rg_index1, rg_index2):
     rg2_content = _table.read_row_group(rg_index2, columns=[column_name])
     for _ in rg2_content.column(column_name):
         _ = str(_)
+        if (type(eval(_)) == float):
+            _ = str(int(_))
         union_num += 1
         if _ in rg1_dict:
             join_num += (1 + rg1_dict[_])
