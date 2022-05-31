@@ -74,74 +74,22 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     plt.close()
 
 if __name__ == "__main__":
-    file_name = "20220524_040257_00019_fs53m_0ac223b1-073d-419a-a423-a83527104d5b"
+    file_name = "20220524_062839_00026_fs53m_66cba92c-a213-4e48-ab15-5b37a5bb0daa"
     draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
-        10, "shipdate", "date",
-        str("1992-1-1"),
-        str("1992-2-1"))
-    draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
-        10, "shipdate", "date",
-        str("1992-1-1"),
-        str("1992-3-1"))
-    draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
-        10, "extendedprice", "float",
-        str("40000"),
-        str("40010"))
-    draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/lineitem/" + file_name,
-        10, "extendedprice", "float",
-        str("40000"),
-        str("40100"))
+        "/mydata/tpch_parquet_300.db_rewrite/orders/" + file_name,
+        10, "orderdate", "date",
+        str("1993-1-1"),
+        str("1993-2-1"))
 
-    file_name = "20220524_064704_00027_fs53m_1af48bb7-7f26-4364-8cca-751850202710"
-    draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/customer/" + file_name,
-        10, "acctbal", "float",
-        str("1000"),
-        str("1010"))
-    draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/customer/" + file_name,
-        10, "acctbal", "float",
-        str("1000"),
-        str("1100"))
-    draw_scatter(
-        "/mydata/tpch_parquet_300.db_rewrite/customer/" + file_name,
-        10, "custkey", "float",
-        str("20000000"),
-        str("20100000"))
-
-    file_name = "20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887"
-    draw_scatter(
-        "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/" + file_name,
-        10, "cs_net_paid_inc_ship", "float",
-        str("20000"),
-        str("20000"))
-    draw_scatter(
-        "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/" + file_name,
-        10, "cs_net_profit", "float",
-        str("10000"),
-        str("10500"))
-
-    file_name = "20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399"
-    draw_scatter(
-        "/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name,
-        10, "cr_item_sk", "float",
-        str("120000"),
-        str("125000"))
-    draw_scatter(
-        "/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name,
-        10, "cr_returned_time_sk", "float",
-        str("20000"),
-        str("21000"))
-
-    file_name = "20220523_141210_00007_fs53m_f74350a2-39bd-4d7c-966f-2d691ea63d0a"
-    draw_scatter(
-        "/mydata/tpcds_parquet_300.db_rewrite/customer_address/" + file_name,
-        10, "ca_address_sk", "float",
-        str("600000"),
-        str("630000"))
-
-
+    # file_name = "20220523_132919_00005_fs53m_ff916c89-b7ca-4b23-b0f1-efd34a8ec887"
+    # draw_scatter(
+    #     "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/" + file_name,
+    #     10, "cs_net_profit", "float",
+    #     str("0"),
+    #     str("500"))
+    #
+    # draw_scatter(
+    #     "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/" + file_name,
+    #     10, "cs_net_paid_inc_ship", "float",
+    #     str("10000"),
+    #     str("10500"))
