@@ -1,1 +1,1 @@
-insert into reason select * from tpcds.sf1000.reason;
+insert into reason select * from tpcds.sf100.reason;

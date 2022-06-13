@@ -1,0 +1,1 @@
+insert into time_dim select * from tpcds.sf1000.time_dim;

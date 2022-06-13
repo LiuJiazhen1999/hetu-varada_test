@@ -1,1 +1,1 @@
-insert into item select * from tpcds.sf1000.item;
+insert into item select * from tpcds.sf100.item;

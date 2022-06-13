@@ -1,1 +1,1 @@
-insert into catalog_returns select * from tpcds.sf1000.catalog_returns;
+insert into catalog_returns select * from tpcds.sf100.catalog_returns;

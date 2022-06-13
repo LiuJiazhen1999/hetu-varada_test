@@ -1,1 +1,1 @@
-insert into customer_demographics select * from tpcds.sf1000.customer_demographics;
+insert into customer_demographics select * from tpcds.sf100.customer_demographics;

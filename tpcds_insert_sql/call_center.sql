@@ -1,1 +1,1 @@
-insert into call_center select * from tpcds.sf1000.call_center;
+insert into call_center select * from tpcds.sf100.call_center;

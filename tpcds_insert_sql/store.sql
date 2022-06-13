@@ -1,1 +1,1 @@
-insert into store select * from tpcds.sf1000.store;
+insert into store select * from tpcds.sf100.store;

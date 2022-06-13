@@ -1,0 +1,1 @@
+insert into warehouse select * from tpcds.sf1000.warehouse;

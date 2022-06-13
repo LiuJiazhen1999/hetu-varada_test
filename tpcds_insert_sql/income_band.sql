@@ -1,1 +1,1 @@
-insert into income_band select * from tpcds.sf1000.income_band;
+insert into income_band select * from tpcds.sf100.income_band;

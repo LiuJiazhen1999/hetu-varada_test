@@ -1,1 +1,1 @@
-insert into store_returns select * from tpcds.sf1000.store_returns;
+insert into store_returns select * from tpcds.sf100.store_returns;

@@ -1,0 +1,1 @@
+insert into customer_address select * from tpcds.sf1000.customer_address;

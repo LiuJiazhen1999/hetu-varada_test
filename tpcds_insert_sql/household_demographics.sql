@@ -1,1 +1,1 @@
-insert into household_demographics select * from tpcds.sf1000.household_demographics;
+insert into household_demographics select * from tpcds.sf100.household_demographics;

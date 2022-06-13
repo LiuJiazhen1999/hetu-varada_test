@@ -1,1 +1,1 @@
-insert into web_returns select * from tpcds.sf1000.web_returns;
+insert into web_returns select * from tpcds.sf100.web_returns;

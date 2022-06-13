@@ -1,1 +1,1 @@
-insert into customer select * from tpcds.sf1000.customer;
+insert into customer select * from tpcds.sf100.customer;

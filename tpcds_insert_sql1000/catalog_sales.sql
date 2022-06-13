@@ -1,0 +1,1 @@
+insert into catalog_sales select * from tpcds.sf1000.catalog_sales;

@@ -1,1 +1,1 @@
-insert into web_page select * from tpcds.sf1000.web_page;
+insert into web_page select * from tpcds.sf100.web_page;

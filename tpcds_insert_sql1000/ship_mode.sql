@@ -1,0 +1,1 @@
+insert into ship_mode select * from tpcds.sf1000.ship_mode;

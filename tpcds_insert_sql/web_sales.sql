@@ -1,1 +1,1 @@
-insert into web_sales select * from tpcds.sf1000.web_sales;
+insert into web_sales select * from tpcds.sf100.web_sales;

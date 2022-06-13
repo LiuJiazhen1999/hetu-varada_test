@@ -1,1 +1,1 @@
-insert into date_dim select * from tpcds.sf1000.date_dim;
+insert into date_dim select * from tpcds.sf100.date_dim;
