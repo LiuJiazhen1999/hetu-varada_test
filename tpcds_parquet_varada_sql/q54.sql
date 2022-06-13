@@ -11,17 +11,17 @@ WITH
       , "cs_bill_customer_sk" "customer_sk"
       , "cs_item_sk" "item_sk"
       FROM
-        varada.tpcds_parquet_1000.catalog_sales
+        varada.tpcds_parquet_100.catalog_sales
 UNION ALL       SELECT
         "ws_sold_date_sk" "sold_date_sk"
       , "ws_bill_customer_sk" "customer_sk"
       , "ws_item_sk" "item_sk"
       FROM
-        varada.tpcds_parquet_1000.web_sales
+        varada.tpcds_parquet_100.web_sales
    )  cs_or_ws_sales
-   , varada.tpcds_parquet_1000.item
-   , varada.tpcds_parquet_1000.date_dim
-   , varada.tpcds_parquet_1000.customer
+   , varada.tpcds_parquet_100.item
+   , varada.tpcds_parquet_100.date_dim
+   , varada.tpcds_parquet_100.customer
    WHERE ("sold_date_sk" = "d_date_sk")
       AND ("item_sk" = "i_item_sk")
       AND ("i_category" = 'Women                                             ')
@@ -36,10 +36,10 @@ UNION ALL       SELECT
    , "sum"("ss_ext_sales_price") "revenue"
    FROM
      my_customers
-   , varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.customer_address
-   , varada.tpcds_parquet_1000.store
-   , varada.tpcds_parquet_1000.date_dim
+   , varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.customer_address
+   , varada.tpcds_parquet_100.store
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("c_current_addr_sk" = "ca_address_sk")
       AND ("ca_county" = "s_county")
       AND ("ca_state" = "s_state")
@@ -48,13 +48,13 @@ UNION ALL       SELECT
       AND ("d_month_seq" BETWEEN (
       SELECT DISTINCT ("d_month_seq" + 1)
       FROM
-        varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.date_dim
       WHERE ("d_year" = 1998)
          AND ("d_moy" = 12)
    ) AND (
       SELECT DISTINCT ("d_month_seq" + 3)
       FROM
-        varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.date_dim
       WHERE ("d_year" = 1998)
          AND ("d_moy" = 12)
    ))

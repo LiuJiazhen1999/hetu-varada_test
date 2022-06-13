@@ -6,8 +6,8 @@ WITH
    , "ws1"."ws_warehouse_sk" "wh1"
    , "ws2"."ws_warehouse_sk" "wh2"
    FROM
-     varada.tpcds_parquet_1000.web_sales ws1
-   , varada.tpcds_parquet_1000.web_sales ws2
+     varada.tpcds_parquet_100.web_sales ws1
+   , varada.tpcds_parquet_100.web_sales ws2
    WHERE ("ws1"."ws_order_number" = "ws2"."ws_order_number")
       AND ("ws1"."ws_warehouse_sk" <> "ws2"."ws_warehouse_sk")
 ) 
@@ -16,10 +16,10 @@ SELECT
 , "sum"("ws_ext_ship_cost") "total shipping cost"
 , "sum"("ws_net_profit") "total net profit"
 FROM
-  varada.tpcds_parquet_1000.web_sales ws1
-, varada.tpcds_parquet_1000.date_dim
-, varada.tpcds_parquet_1000.customer_address
-, varada.tpcds_parquet_1000.web_site
+  varada.tpcds_parquet_100.web_sales ws1
+, varada.tpcds_parquet_100.date_dim
+, varada.tpcds_parquet_100.customer_address
+, varada.tpcds_parquet_100.web_site
 WHERE (CAST("d_date" AS DATE) BETWEEN CAST('1999-2-01' AS DATE) AND (CAST('1999-2-01' AS DATE) + INTERVAL  '60' DAY))
    AND ("ws1"."ws_ship_date_sk" = "d_date_sk")
    AND ("ws1"."ws_ship_addr_sk" = "ca_address_sk")
@@ -34,7 +34,7 @@ WHERE (CAST("d_date" AS DATE) BETWEEN CAST('1999-2-01' AS DATE) AND (CAST('1999-
    AND ("ws1"."ws_order_number" IN (
    SELECT "wr_order_number"
    FROM
-     varada.tpcds_parquet_1000.web_returns
+     varada.tpcds_parquet_100.web_returns
    , ws_wh
    WHERE ("wr_order_number" = "ws_wh"."ws_order_number")
 ))

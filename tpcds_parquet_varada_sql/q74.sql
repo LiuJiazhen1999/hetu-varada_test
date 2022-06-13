@@ -9,9 +9,9 @@ WITH
    , "sum"("ss_net_paid") "year_total"
    , 's' "sale_type"
    FROM
-     varada.tpcds_parquet_1000.customer
-   , varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_100.customer
+   , varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("c_customer_sk" = "ss_customer_sk")
       AND ("ss_sold_date_sk" = "d_date_sk")
       AND ("d_year" IN (2001   , (2001 + 1)))
@@ -24,9 +24,9 @@ UNION ALL    SELECT
    , "sum"("ws_net_paid") "year_total"
    , 'w' "sale_type"
    FROM
-     varada.tpcds_parquet_1000.customer
-   , varada.tpcds_parquet_1000.web_sales
-   , varada.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_100.customer
+   , varada.tpcds_parquet_100.web_sales
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("c_customer_sk" = "ws_bill_customer_sk")
       AND ("ws_sold_date_sk" = "d_date_sk")
       AND ("d_year" IN (2001   , (2001 + 1)))

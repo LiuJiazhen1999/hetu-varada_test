@@ -6,9 +6,9 @@ SELECT
 , "i_category"
 , "avg"("inv_quantity_on_hand") "qoh"
 FROM
-  varada.tpcds_parquet_1000.inventory
-, varada.tpcds_parquet_1000.date_dim
-, varada.tpcds_parquet_1000.item
+  varada.tpcds_parquet_100.inventory
+, varada.tpcds_parquet_100.date_dim
+, varada.tpcds_parquet_100.item
 WHERE ("inv_date_sk" = "d_date_sk")
    AND ("inv_item_sk" = "i_item_sk")
    AND ("d_month_seq" BETWEEN 1200 AND (1200 + 11))

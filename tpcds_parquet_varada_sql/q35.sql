@@ -19,16 +19,16 @@ SELECT
 , "max"("cd_dep_college_count")
 , "avg"("cd_dep_college_count")
 FROM
-  varada.tpcds_parquet_1000.customer c
-, varada.tpcds_parquet_1000.customer_address ca
-, varada.tpcds_parquet_1000.customer_demographics
+  varada.tpcds_parquet_100.customer c
+, varada.tpcds_parquet_100.customer_address ca
+, varada.tpcds_parquet_100.customer_demographics
 WHERE ("c"."c_current_addr_sk" = "ca"."ca_address_sk")
    AND ("cd_demo_sk" = "c"."c_current_cdemo_sk")
    AND (EXISTS (
    SELECT *
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("c"."c_customer_sk" = "ss_customer_sk")
       AND ("ss_sold_date_sk" = "d_date_sk")
       AND ("d_year" = 2002)
@@ -37,8 +37,8 @@ WHERE ("c"."c_current_addr_sk" = "ca"."ca_address_sk")
    AND ((EXISTS (
       SELECT *
       FROM
-        varada.tpcds_parquet_1000.web_sales
-      , varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.web_sales
+      , varada.tpcds_parquet_100.date_dim
       WHERE ("c"."c_customer_sk" = "ws_bill_customer_sk")
          AND ("ws_sold_date_sk" = "d_date_sk")
          AND ("d_year" = 2002)
@@ -47,8 +47,8 @@ WHERE ("c"."c_current_addr_sk" = "ca"."ca_address_sk")
       OR (EXISTS (
       SELECT *
       FROM
-        varada.tpcds_parquet_1000.catalog_sales
-      , varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.catalog_sales
+      , varada.tpcds_parquet_100.date_dim
       WHERE ("c"."c_customer_sk" = "cs_ship_customer_sk")
          AND ("cs_sold_date_sk" = "d_date_sk")
          AND ("d_year" = 2002)

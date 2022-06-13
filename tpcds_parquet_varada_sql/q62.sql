@@ -12,11 +12,11 @@ SELECT
    AND (("ws_ship_date_sk" - "ws_sold_date_sk") <= 120) THEN 1 ELSE 0 END)) "91-120 days"
 , "sum"((CASE WHEN (("ws_ship_date_sk" - "ws_sold_date_sk") > 120) THEN 1 ELSE 0 END)) ">120 days"
 FROM
-  varada.tpcds_parquet_1000.web_sales
-, varada.tpcds_parquet_1000.warehouse
-, varada.tpcds_parquet_1000.ship_mode
-, varada.tpcds_parquet_1000.web_site
-, varada.tpcds_parquet_1000.date_dim
+  varada.tpcds_parquet_100.web_sales
+, varada.tpcds_parquet_100.warehouse
+, varada.tpcds_parquet_100.ship_mode
+, varada.tpcds_parquet_100.web_site
+, varada.tpcds_parquet_100.date_dim
 WHERE ("d_month_seq" BETWEEN 1200 AND (1200 + 11))
    AND ("ws_ship_date_sk" = "d_date_sk")
    AND ("ws_warehouse_sk" = "w_warehouse_sk")

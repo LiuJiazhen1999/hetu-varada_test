@@ -14,12 +14,12 @@ WITH
    , "i_size"
    , "sum"("ss_net_paid") "netpaid"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.store_returns
-   , varada.tpcds_parquet_1000.store
-   , varada.tpcds_parquet_1000.item
-   , varada.tpcds_parquet_1000.customer
-   , varada.tpcds_parquet_1000.customer_address
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.store_returns
+   , varada.tpcds_parquet_100.store
+   , varada.tpcds_parquet_100.item
+   , varada.tpcds_parquet_100.customer
+   , varada.tpcds_parquet_100.customer_address
    WHERE ("ss_ticket_number" = "sr_ticket_number")
       AND ("ss_item_sk" = "sr_item_sk")
       AND ("ss_customer_sk" = "c_customer_sk")

@@ -6,11 +6,11 @@ SELECT
 , "avg"("cs_coupon_amt") "agg3"
 , "avg"("cs_sales_price") "agg4"
 FROM
-  varada.tpcds_parquet_1000.catalog_sales
-, varada.tpcds_parquet_1000.customer_demographics
-, varada.tpcds_parquet_1000.date_dim
-, varada.tpcds_parquet_1000.item
-, varada.tpcds_parquet_1000.promotion
+  varada.tpcds_parquet_100.catalog_sales
+, varada.tpcds_parquet_100.customer_demographics
+, varada.tpcds_parquet_100.date_dim
+, varada.tpcds_parquet_100.item
+, varada.tpcds_parquet_100.promotion
 WHERE ("cs_sold_date_sk" = "d_date_sk")
    AND ("cs_item_sk" = "i_item_sk")
    AND ("cs_bill_cdemo_sk" = "cd_demo_sk")

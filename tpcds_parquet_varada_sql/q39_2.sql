@@ -18,10 +18,10 @@ WITH
       , "stddev_samp"("inv_quantity_on_hand") "stdev"
       , "avg"("inv_quantity_on_hand") "mean"
       FROM
-        varada.tpcds_parquet_1000.inventory
-      , varada.tpcds_parquet_1000.item
-      , varada.tpcds_parquet_1000.warehouse
-      , varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.inventory
+      , varada.tpcds_parquet_100.item
+      , varada.tpcds_parquet_100.warehouse
+      , varada.tpcds_parquet_100.date_dim
       WHERE ("inv_item_sk" = "i_item_sk")
          AND ("inv_warehouse_sk" = "w_warehouse_sk")
          AND ("inv_date_sk" = "d_date_sk")

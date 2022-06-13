@@ -3,9 +3,9 @@ SELECT
   "s_store_name"
 , "sum"("ss_net_profit")
 FROM
-  varada.tpcds_parquet_1000.store_sales
-, varada.tpcds_parquet_1000.date_dim
-, varada.tpcds_parquet_1000.store
+  varada.tpcds_parquet_100.store_sales
+, varada.tpcds_parquet_100.date_dim
+, varada.tpcds_parquet_100.store
 , (
    SELECT "ca_zip"
    FROM
@@ -13,7 +13,7 @@ FROM
 (
          SELECT "substr"("ca_zip", 1, 5) "ca_zip"
          FROM
-           varada.tpcds_parquet_1000.customer_address
+           varada.tpcds_parquet_100.customer_address
          WHERE ("substr"("ca_zip", 1, 5) IN (
                 '24128     '
               , '57834     '
@@ -423,8 +423,8 @@ FROM
               "substr"("ca_zip", 1, 5) "ca_zip"
             , "count"(*) "cnt"
             FROM
-              varada.tpcds_parquet_1000.customer_address
-            , varada.tpcds_parquet_1000.customer
+              varada.tpcds_parquet_100.customer_address
+            , varada.tpcds_parquet_100.customer
             WHERE ("ca_address_sk" = "c_current_addr_sk")
                AND ("c_preferred_cust_flag" = 'Y')
             GROUP BY "ca_zip"

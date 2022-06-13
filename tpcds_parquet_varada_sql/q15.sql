@@ -3,10 +3,10 @@ SELECT
   "ca_zip"
 , "sum"("cs_sales_price")
 FROM
-  varada.tpcds_parquet_1000.catalog_sales
-, varada.tpcds_parquet_1000.customer
-, varada.tpcds_parquet_1000.customer_address
-, varada.tpcds_parquet_1000.date_dim
+  varada.tpcds_parquet_100.catalog_sales
+, varada.tpcds_parquet_100.customer
+, varada.tpcds_parquet_100.customer_address
+, varada.tpcds_parquet_100.date_dim
 WHERE ("cs_bill_customer_sk" = "c_customer_sk")
    AND ("c_current_addr_sk" = "ca_address_sk")
    AND (("substr"("ca_zip", 1, 5) IN ('85669'   , '86197'   , '88274'   , '83405'   , '86475'   , '85392'   , '85460'   , '80348'   , '81792'))

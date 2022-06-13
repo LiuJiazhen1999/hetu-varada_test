@@ -4,11 +4,11 @@ SELECT
 , "ca_city"
 , "sum"("ws_sales_price")
 FROM
-  varada.tpcds_parquet_1000.web_sales
-, varada.tpcds_parquet_1000.customer
-, varada.tpcds_parquet_1000.customer_address
-, varada.tpcds_parquet_1000.date_dim
-, varada.tpcds_parquet_1000.item
+  varada.tpcds_parquet_100.web_sales
+, varada.tpcds_parquet_100.customer
+, varada.tpcds_parquet_100.customer_address
+, varada.tpcds_parquet_100.date_dim
+, varada.tpcds_parquet_100.item
 WHERE ("ws_bill_customer_sk" = "c_customer_sk")
    AND ("c_current_addr_sk" = "ca_address_sk")
    AND ("ws_item_sk" = "i_item_sk")
@@ -16,7 +16,7 @@ WHERE ("ws_bill_customer_sk" = "c_customer_sk")
       OR ("i_item_id" IN (
       SELECT "i_item_id"
       FROM
-        varada.tpcds_parquet_1000.item
+        varada.tpcds_parquet_100.item
       WHERE ("i_item_sk" IN (2      , 3      , 5      , 7      , 11      , 13      , 17      , 19      , 23      , 29))
    )))
    AND ("ws_sold_date_sk" = "d_date_sk")

@@ -5,14 +5,14 @@ WITH
      "i_manufact_id"
    , "sum"("ss_ext_sales_price") "total_sales"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.date_dim
-   , varada.tpcds_parquet_1000.customer_address
-   , varada.tpcds_parquet_1000.item
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.date_dim
+   , varada.tpcds_parquet_100.customer_address
+   , varada.tpcds_parquet_100.item
    WHERE ("i_manufact_id" IN (
       SELECT "i_manufact_id"
       FROM
-        varada.tpcds_parquet_1000.item
+        varada.tpcds_parquet_100.item
       WHERE ("i_category" IN ('Electronics                                       '))
    ))
       AND ("ss_item_sk" = "i_item_sk")
@@ -28,14 +28,14 @@ WITH
      "i_manufact_id"
    , "sum"("cs_ext_sales_price") "total_sales"
    FROM
-     varada.tpcds_parquet_1000.catalog_sales
-   , varada.tpcds_parquet_1000.date_dim
-   , varada.tpcds_parquet_1000.customer_address
-   , varada.tpcds_parquet_1000.item
+     varada.tpcds_parquet_100.catalog_sales
+   , varada.tpcds_parquet_100.date_dim
+   , varada.tpcds_parquet_100.customer_address
+   , varada.tpcds_parquet_100.item
    WHERE ("i_manufact_id" IN (
       SELECT "i_manufact_id"
       FROM
-        varada.tpcds_parquet_1000.item
+        varada.tpcds_parquet_100.item
       WHERE ("i_category" IN ('Electronics                                       '))
    ))
       AND ("cs_item_sk" = "i_item_sk")
@@ -51,14 +51,14 @@ WITH
      "i_manufact_id"
    , "sum"("ws_ext_sales_price") "total_sales"
    FROM
-     varada.tpcds_parquet_1000.web_sales
-   , varada.tpcds_parquet_1000.date_dim
-   , varada.tpcds_parquet_1000.customer_address
-   , varada.tpcds_parquet_1000.item
+     varada.tpcds_parquet_100.web_sales
+   , varada.tpcds_parquet_100.date_dim
+   , varada.tpcds_parquet_100.customer_address
+   , varada.tpcds_parquet_100.item
    WHERE ("i_manufact_id" IN (
       SELECT "i_manufact_id"
       FROM
-        varada.tpcds_parquet_1000.item
+        varada.tpcds_parquet_100.item
       WHERE ("i_category" IN ('Electronics                                       '))
    ))
       AND ("ws_item_sk" = "i_item_sk")

@@ -6,8 +6,8 @@ WITH
    , "sum"("cs_ext_list_price") "sale"
    , "sum"((("cr_refunded_cash" + "cr_reversed_charge") + "cr_store_credit")) "refund"
    FROM
-     varada.tpcds_parquet_1000.catalog_sales
-   , varada.tpcds_parquet_1000.catalog_returns
+     varada.tpcds_parquet_100.catalog_sales
+   , varada.tpcds_parquet_100.catalog_returns
    WHERE ("cs_item_sk" = "cr_item_sk")
       AND ("cs_order_number" = "cr_order_number")
    GROUP BY "cs_item_sk"
@@ -35,24 +35,24 @@ WITH
    , "sum"("ss_list_price") "s2"
    , "sum"("ss_coupon_amt") "s3"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.store_returns
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.store_returns
    , cs_ui
-   , varada.tpcds_parquet_1000.date_dim d1
-   , varada.tpcds_parquet_1000.date_dim d2
-   , varada.tpcds_parquet_1000.date_dim d3
-   , varada.tpcds_parquet_1000.store
-   , varada.tpcds_parquet_1000.customer
-   , varada.tpcds_parquet_1000.customer_demographics cd1
-   , varada.tpcds_parquet_1000.customer_demographics cd2
-   , varada.tpcds_parquet_1000.promotion
-   , varada.tpcds_parquet_1000.household_demographics hd1
-   , varada.tpcds_parquet_1000.household_demographics hd2
-   , varada.tpcds_parquet_1000.customer_address ad1
-   , varada.tpcds_parquet_1000.customer_address ad2
-   , varada.tpcds_parquet_1000.income_band ib1
-   , varada.tpcds_parquet_1000.income_band ib2
-   , varada.tpcds_parquet_1000.item
+   , varada.tpcds_parquet_100.date_dim d1
+   , varada.tpcds_parquet_100.date_dim d2
+   , varada.tpcds_parquet_100.date_dim d3
+   , varada.tpcds_parquet_100.store
+   , varada.tpcds_parquet_100.customer
+   , varada.tpcds_parquet_100.customer_demographics cd1
+   , varada.tpcds_parquet_100.customer_demographics cd2
+   , varada.tpcds_parquet_100.promotion
+   , varada.tpcds_parquet_100.household_demographics hd1
+   , varada.tpcds_parquet_100.household_demographics hd2
+   , varada.tpcds_parquet_100.customer_address ad1
+   , varada.tpcds_parquet_100.customer_address ad2
+   , varada.tpcds_parquet_100.income_band ib1
+   , varada.tpcds_parquet_100.income_band ib2
+   , varada.tpcds_parquet_100.item
    WHERE ("ss_store_sk" = "s_store_sk")
       AND ("ss_sold_date_sk" = "d1"."d_date_sk")
       AND ("ss_customer_sk" = "c_customer_sk")

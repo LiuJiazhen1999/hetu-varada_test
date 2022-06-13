@@ -4,10 +4,10 @@ FROM
   (
    SELECT "count"(*) "h8_30_to_9"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -24,10 +24,10 @@ FROM
 , (
    SELECT "count"(*) "h9_to_9_30"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -44,10 +44,10 @@ FROM
 , (
    SELECT "count"(*) "h9_30_to_10"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -64,10 +64,10 @@ FROM
 , (
    SELECT "count"(*) "h10_to_10_30"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -84,10 +84,10 @@ FROM
 , (
    SELECT "count"(*) "h10_30_to_11"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -104,10 +104,10 @@ FROM
 , (
    SELECT "count"(*) "h11_to_11_30"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -124,10 +124,10 @@ FROM
 , (
    SELECT "count"(*) "h11_30_to_12"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")
@@ -144,10 +144,10 @@ FROM
 , (
    SELECT "count"(*) "h12_to_12_30"
    FROM
-     varada.tpcds_parquet_1000.store_sales
-   , varada.tpcds_parquet_1000.household_demographics
-   , varada.tpcds_parquet_1000.time_dim
-   , varada.tpcds_parquet_1000.store
+     varada.tpcds_parquet_100.store_sales
+   , varada.tpcds_parquet_100.household_demographics
+   , varada.tpcds_parquet_100.time_dim
+   , varada.tpcds_parquet_100.store
    WHERE ("ss_sold_time_sk" = "time_dim"."t_time_sk")
       AND ("ss_hdemo_sk" = "household_demographics"."hd_demo_sk")
       AND ("ss_store_sk" = "s_store_sk")

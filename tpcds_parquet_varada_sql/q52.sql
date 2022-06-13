@@ -5,9 +5,9 @@ SELECT
 , "item"."i_brand" "brand"
 , "sum"("ss_ext_sales_price") "ext_price"
 FROM
-  varada.tpcds_parquet_1000.date_dim dt
-, varada.tpcds_parquet_1000.store_sales
-, varada.tpcds_parquet_1000.item
+  varada.tpcds_parquet_100.date_dim dt
+, varada.tpcds_parquet_100.store_sales
+, varada.tpcds_parquet_100.item
 WHERE ("dt"."d_date_sk" = "store_sales"."ss_sold_date_sk")
    AND ("store_sales"."ss_item_sk" = "item"."i_item_sk")
    AND ("item"."i_manager_id" = 1)

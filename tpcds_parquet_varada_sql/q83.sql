@@ -5,18 +5,18 @@ WITH
      "i_item_id" "item_id"
    , "sum"("sr_return_quantity") "sr_item_qty"
    FROM
-     varada.tpcds_parquet_1000.store_returns
-   , varada.tpcds_parquet_1000.item
-   , varada.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_100.store_returns
+   , varada.tpcds_parquet_100.item
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("sr_item_sk" = "i_item_sk")
       AND ("d_date" IN (
       SELECT "d_date"
       FROM
-        varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.date_dim
       WHERE ("d_week_seq" IN (
          SELECT "d_week_seq"
          FROM
-           varada.tpcds_parquet_1000.date_dim
+           varada.tpcds_parquet_100.date_dim
          WHERE ("d_date" IN (CAST('2000-06-30' AS DATE)         , CAST('2000-09-27' AS DATE)         , CAST('2000-11-17' AS DATE)))
       ))
    ))
@@ -28,18 +28,18 @@ WITH
      "i_item_id" "item_id"
    , "sum"("cr_return_quantity") "cr_item_qty"
    FROM
-     varada.tpcds_parquet_1000.catalog_returns
-   , varada.tpcds_parquet_1000.item
-   , varada.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_100.catalog_returns
+   , varada.tpcds_parquet_100.item
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("cr_item_sk" = "i_item_sk")
       AND ("d_date" IN (
       SELECT "d_date"
       FROM
-        varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.date_dim
       WHERE ("d_week_seq" IN (
          SELECT "d_week_seq"
          FROM
-           varada.tpcds_parquet_1000.date_dim
+           varada.tpcds_parquet_100.date_dim
          WHERE ("d_date" IN (CAST('2000-06-30' AS DATE)         , CAST('2000-09-27' AS DATE)         , CAST('2000-11-17' AS DATE)))
       ))
    ))
@@ -51,18 +51,18 @@ WITH
      "i_item_id" "item_id"
    , "sum"("wr_return_quantity") "wr_item_qty"
    FROM
-     varada.tpcds_parquet_1000.web_returns
-   , varada.tpcds_parquet_1000.item
-   , varada.tpcds_parquet_1000.date_dim
+     varada.tpcds_parquet_100.web_returns
+   , varada.tpcds_parquet_100.item
+   , varada.tpcds_parquet_100.date_dim
    WHERE ("wr_item_sk" = "i_item_sk")
       AND ("d_date" IN (
       SELECT "d_date"
       FROM
-        varada.tpcds_parquet_1000.date_dim
+        varada.tpcds_parquet_100.date_dim
       WHERE ("d_week_seq" IN (
          SELECT "d_week_seq"
          FROM
-           varada.tpcds_parquet_1000.date_dim
+           varada.tpcds_parquet_100.date_dim
          WHERE ("d_date" IN (CAST('2000-06-30' AS DATE)         , CAST('2000-09-27' AS DATE)         , CAST('2000-11-17' AS DATE)))
       ))
    ))
