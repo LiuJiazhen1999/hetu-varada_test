@@ -42,7 +42,7 @@ tpcds_table_set = {'call_center': [['cc_call_center_sk', 'cc_rec_start_date', 'c
 if __name__ == "__main__":
     _wf = open("allJaccardInfo.txt", "w+", encoding="UTF-8")
     for table in tpch_table_set:
-        table_dir = "/mydata/tpch_parquet_300.db_rewrite_index/" + str(table) + "/"
+        table_dir = "/mydata/tpch_parquet_300.db_rewrite/" + str(table) + "/"
         files = os.listdir(table_dir)
         count = 0
         for file in files:
@@ -57,7 +57,7 @@ if __name__ == "__main__":
             if count >= 2:
                 break
     for table in tpcds_table_set:
-        table_dir = "/mydata/tpcds_parquet_300.db_rewrite_index/" + str(table) + "/"
+        table_dir = "/mydata/tpcds_parquet_300.db_rewrite/" + str(table) + "/"
         files = os.listdir(table_dir)
         count = 0
         for file in files:
