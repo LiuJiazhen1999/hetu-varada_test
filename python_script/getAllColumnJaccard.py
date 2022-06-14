@@ -46,6 +46,8 @@ if __name__ == "__main__":
         files = os.listdir(table_dir)
         count = 0
         for file in files:
+            if ".png" in file:
+                continue
             tpch_path = table_dir + file
             column_info = tpch_table_set[table]
             for i in range(len(column_info[0])):
@@ -59,6 +61,8 @@ if __name__ == "__main__":
         files = os.listdir(table_dir)
         count = 0
         for file in files:
+            if ".png" in file:
+                continue
             tpcd_path = table_dir + file
             column_info = tpcds_table_set[table]
             for i in range(len(column_info[0])):
