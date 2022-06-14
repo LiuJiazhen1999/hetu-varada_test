@@ -20,6 +20,8 @@ def com_jaccard(file_path, column_name, column_type):
     join_num = 0
     _table = pp.ParquetFile(file_path)
     rg_num = _table.num_row_groups
+    if rg_num < 10:
+        return 0
     for rg_index1 in range(0, int(rg_num/10)):
         rg1_content = _table.read_row_group(rg_index1, columns=[column_name])
         for _ in rg1_content.column(column_name):
