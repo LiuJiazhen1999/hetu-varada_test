@@ -137,24 +137,20 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
 
 if __name__ == "__main__":
     search_list = [
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%， jaccard:1"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询， jaccard:0.723"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询， jaccard:1"]
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%，jaccard:0"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%， jaccard:0.7436"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%， jaccard:0.1293"],
+		["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20000000", "点查询，jaccard:0"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5000", "点查询， jaccard:0.7436"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "200000", "点查询， jaccard:0.1293"]
     ]
     origin_search_list = [
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%， jaccard:1"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询， jaccard:0.723"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询， jaccard:1"]
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%，jaccard:0"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%， jaccard:0.7436"],
+        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%， jaccard:0.1293"],
+		["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20000000", "点查询，jaccard:0"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5000", "点查询， jaccard:0.7436"],
+        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "200000", "点查询， jaccard:0.1293"]
     ]
     for search in search_list:
         perfectnum, allnum = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
