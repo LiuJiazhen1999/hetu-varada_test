@@ -8,8 +8,6 @@ import os
 import sys
 
 import pyarrow.parquet as pp
-import matplotlib.pyplot as plt
-import numpy as np
 from pybloom_live import ScalableBloomFilter, BloomFilter
 
 def is_lt(column_type, value1, value2):
