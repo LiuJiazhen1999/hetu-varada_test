@@ -10,6 +10,9 @@ import sys
 import pyarrow.parquet as pp
 from pybloom_live import ScalableBloomFilter, BloomFilter
 
+from jaccardCompute import com_jaccard
+
+
 def is_lt(column_type, value1, value2):
     """
     :param column_type: 值的类型
@@ -81,9 +84,15 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
     files = os.listdir(_dir + table)
     _valid_block_num = 0
     _all_block_num = 0
-    for file in files:
+    _all_jaccard = 0
+    file_count = 0
+    for file in files.sort():
         if ".png" in file:
             continue
+        if file_count > 1:
+            break
+        file_count += 1
+        _all_jaccard += com_jaccard(_dir + table, column, column_type)
         _table = pp.ParquetFile(_dir + table + "/" + file)
         num_of_row_groups = _table.num_row_groups
         _all_block_num += num_of_row_groups
@@ -94,7 +103,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
                 if is_lt(column_type, _start, _value) and is_gt(column_type, _end, _value):
                     _valid_block_num += 1
                     break
-    return _valid_block_num, _all_block_num
+    return _valid_block_num, _all_block_num, _all_jaccard/file_count
 
 def searchWithMMB(_dir, table, column, column_type, _start, _end):
     """
@@ -108,15 +117,19 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
     """
     files = os.listdir(_dir + table)
     _valid_block_num = 0
-    for file in files:
+    file_count = 0
+    for file in files.sort():
         if ".png" in file:
             continue
+        if file_count > 1:
+            break
+        file_count += 1
         _table = pp.ParquetFile(_dir + table + "/" + file)
         num_of_row_groups = _table.num_row_groups
         for _index in range(num_of_row_groups):
             row_group_contents = _table.read_row_group(_index, columns=[column])
             _min, _max = get_sys_min_max_value(column_type)
-            bloom = ScalableBloomFilter(initial_capacity=100, error_rate=0.001)
+            bloom = ScalableBloomFilter(initial_capacity=1000, error_rate=0.001)
             for _value in row_group_contents.column(column):
                 _value = str(_value)
                 if is_lt(column_type, _value, _min):
@@ -137,30 +150,44 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
 
 if __name__ == "__main__":
     search_list = [
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%， jaccard:1"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询， jaccard:0.723"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询， jaccard:1"]
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "200000", "点查询"]
     ]
     origin_search_list = [
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%， jaccard:1"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询，jaccard:0.067"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询， jaccard:0.763"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询， jaccard:0.723"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询， jaccard:1"]
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "200000", "点查询"]
     ]
     for search in search_list:
-        perfectnum, allnum = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+        perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
+        search.append(jaccard)
         print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
     for search in origin_search_list:
-        perfectnum, allnum = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+        perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+        search.append(jaccard)
         print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum))
