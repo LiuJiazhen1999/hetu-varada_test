@@ -100,9 +100,9 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
         for _index in range(num_of_row_groups):
             row_group_contents = _table.read_row_group(_index, columns=[column])
             for _value in row_group_contents.column(column):
+                _value = str(_value)
                 if _value == "None":
                     continue
-                _value = str(_value)
                 if is_lt(column_type, _start, _value) and is_gt(column_type, _end, _value):
                     _valid_block_num += 1
                     break
