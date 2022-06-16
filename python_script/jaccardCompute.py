@@ -27,6 +27,8 @@ def com_jaccard(file_path, column_name, column_type):
             rg1_content = _table.read_row_group(rg_index1, columns=[column_name])
             for _ in rg1_content.column(column_name):
                 _ = str(_)
+                if _ == "None":
+                    continue
                 if column_type == "int":
                     _ = int(_)
                 elif column_type == "float":
@@ -40,6 +42,8 @@ def com_jaccard(file_path, column_name, column_type):
             rg2_content = _table.read_row_group(rg_index2, columns=[column_name])
             for _ in rg2_content.column(column_name):
                 _ = str(_)
+                if _ == "None":
+                    continue
                 if column_type == "int":
                     _ = int(_)
                 elif column_type == "float":
