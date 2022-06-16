@@ -36,7 +36,7 @@ def com_jaccard(file_path, column_name, column_type):
                     rg1_dict[_] = 0
                 rg1_dict[_] += 1
     for rg_index2 in range(0, int(rg_num/5)):
-        if rg_index2 % 2 == 0:
+        if rg_index2 % 2 == 1:
             rg2_content = _table.read_row_group(rg_index2, columns=[column_name])
             for _ in rg2_content.column(column_name):
                 _ = str(_)
