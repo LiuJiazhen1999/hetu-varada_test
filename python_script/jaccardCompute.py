@@ -22,30 +22,32 @@ def com_jaccard(file_path, column_name, column_type):
     rg_num = _table.num_row_groups
     if rg_num < 10:
         return 0
-    for rg_index1 in range(0, int(rg_num/10)):
-        rg1_content = _table.read_row_group(rg_index1, columns=[column_name])
-        for _ in rg1_content.column(column_name):
-            _ = str(_)
-            if column_type == "int":
-                _ = int(_)
-            elif column_type == "float":
-                _ = float(_)
-            union_num += 1
-            if _ not in rg1_dict:
-                rg1_dict[_] = 0
-            rg1_dict[_] += 1
-    for rg_index2 in range(int(rg_num/2), int(rg_num/2) + int(rg_num/10)):
-        rg2_content = _table.read_row_group(rg_index2, columns=[column_name])
-        for _ in rg2_content.column(column_name):
-            _ = str(_)
-            if column_type == "int":
-                _ = int(_)
-            elif column_type == "float":
-                _ = float(_)
-            union_num += 1
-            if _ in rg1_dict:
-                join_num += (1 + rg1_dict[_])
-                rg1_dict[_] = 0
+    for rg_index1 in range(0, int(rg_num/5)):
+        if rg_index1 % 2 == 0:
+            rg1_content = _table.read_row_group(rg_index1, columns=[column_name])
+            for _ in rg1_content.column(column_name):
+                _ = str(_)
+                if column_type == "int":
+                    _ = int(_)
+                elif column_type == "float":
+                    _ = float(_)
+                union_num += 1
+                if _ not in rg1_dict:
+                    rg1_dict[_] = 0
+                rg1_dict[_] += 1
+    for rg_index2 in range(0, int(rg_num/5)):
+        if rg_index2 % 2 == 0:
+            rg2_content = _table.read_row_group(rg_index2, columns=[column_name])
+            for _ in rg2_content.column(column_name):
+                _ = str(_)
+                if column_type == "int":
+                    _ = int(_)
+                elif column_type == "float":
+                    _ = float(_)
+                union_num += 1
+                if _ in rg1_dict:
+                    join_num += (1 + rg1_dict[_])
+                    rg1_dict[_] = 0
     return join_num/union_num
 
 def get_file_rg_num(file_path):
