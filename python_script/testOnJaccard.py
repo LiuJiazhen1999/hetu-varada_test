@@ -139,12 +139,11 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
                 if is_gt(column_type, _value, _max):
                     _max = _value
                 if column_type == "float":
-                    bloom.add(float(_value))
-                else:
-                    bloom.add(_value)
+                    _value = str(float(_value))
+                bloom.add(_value)
             if _start == _end:#点查询
                 if column_type == "float":
-                    _start = float(_start)
+                    _start = str(float(_start))
                 if _start in bloom:
                     _valid_block_num += 1
             else:#范围查询
