@@ -44,7 +44,6 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
         _min, _max = get_sys_min_max_value(column_type)
         _flag = False
         for _ in row_group_contents.column(column):
-            print(str(_))
             if str(_) == 'None':
                 continue
             _min = get_min_max_value(column_type, str(_), _min)[0]

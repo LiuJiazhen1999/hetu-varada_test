@@ -100,6 +100,8 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
         for _index in range(num_of_row_groups):
             row_group_contents = _table.read_row_group(_index, columns=[column])
             for _value in row_group_contents.column(column):
+                if _value == "None":
+                    continue
                 _value = str(_value)
                 if is_lt(column_type, _start, _value) and is_gt(column_type, _end, _value):
                     _valid_block_num += 1
@@ -134,6 +136,8 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
             bloom = ScalableBloomFilter(initial_capacity=1000, error_rate=0.001)
             for _value in row_group_contents.column(column):
                 _value = str(_value)
+                if _value == "None":
+                    continue
                 if is_lt(column_type, _value, _min):
                     _min = _value
                 if is_gt(column_type, _value, _max):
@@ -166,7 +170,19 @@ if __name__ == "__main__":
         ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
         ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "200000", "点查询"]
+        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "200000", ""],#14
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_cdemo_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "1000000", "1000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_cdemo_sk", "int", "2000000", "2000000", "点查询"]
     ]
     origin_search_list = [
         ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%"],
@@ -182,15 +198,29 @@ if __name__ == "__main__":
         ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
         ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "200000", "点查询"]
+        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "200000", "点查询"],#14
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_cdemo_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "1000000", "1000000", "点查询"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_cdemo_sk", "int", "2000000", "2000000", "点查询"]
     ]
-    for search in search_list:
+    for i in range(14, len(search_list)):
+        search = search_list[i]
         perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
         print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
-    for search in origin_search_list:
+    for i in range(14, len(origin_search_list)):
+        search = origin_search_list[i]
         perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
         print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum))
