@@ -82,11 +82,12 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
     :param _end: 搜索的终止范围
     """
     files = os.listdir(_dir + table)
+    files.sort()
     _valid_block_num = 0
     _all_block_num = 0
     _all_jaccard = 0
     file_count = 0
-    for file in files.sort():
+    for file in files:
         if ".png" in file:
             continue
         if file_count > 1:
@@ -116,9 +117,10 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
     :param _end: 搜索的终止范围
     """
     files = os.listdir(_dir + table)
+    files.sort()
     _valid_block_num = 0
     file_count = 0
-    for file in files.sort():
+    for file in files:
         if ".png" in file:
             continue
         if file_count > 1:
@@ -138,6 +140,8 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
                     _max = _value
                 if column_type == "float":
                     bloom.add(float(_value))
+                else:
+                    bloom.add(_value)
             if _start == _end:#点查询
                 if column_type == "float":
                     _start = float(_start)
