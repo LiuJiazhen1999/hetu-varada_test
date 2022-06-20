@@ -54,16 +54,16 @@ def compute_iou(_first, _second):
     total_len = max(_first[1], _second[1]) - min(_first[0], _second[0])
     return join_len/total_len
 
-def com_iou(file_path: str, column_name: str, column_type: str)-> float:
+def com_iou(file_path: str, column_name: str, column_type: str):
     _table = pp.ParquetFile(file_path)
     rg_num = _table.num_row_groups
     if rg_num < 20:
-        return -1
+        return -1, 0, 0
     total_iou = 0
     total_count = 0
     _min = sys.maxsize
     _max = -sys.maxsize
-    for rg_index1 in range(0, rg_num/10, 2):
+    for rg_index1 in range(0, int(rg_num/10), 2):
         _first_min = sys.maxsize
         _first_max = -sys.maxsize
         _second_min = sys.maxsize
@@ -106,7 +106,7 @@ if __name__ == "__main__":
         for i in range(len(tpch_table_set[tpch_table][0])):
             column_name = tpch_table_set[tpch_table][0][i]
             column_type = tpch_table_set[tpch_table][1][i]
-            if column_type != "date" or column_type != "int" or column_type != "flaot":
+            if column_type != "date" and column_type != "int" and column_type != "flaot":
                 continue
             files = os.listdir(tpch_dir + tpch_table + "/")
             for file in files:
@@ -121,7 +121,7 @@ if __name__ == "__main__":
         for i in range(len(tpcds_table_set[tpcds_table][0])):
             column_name = tpcds_table_set[tpcds_table][0][i]
             column_type = tpcds_table_set[tpcds_table][1][i]
-            if column_type != "date" or column_type != "int" or column_type != "flaot":
+            if column_type != "date" and column_type != "int" and column_type != "flaot":
                 continue
             files = os.listdir(tpcds_dir + tpcds_table + "/")
             for file in files:
@@ -129,3 +129,4 @@ if __name__ == "__main__":
                     continue
                 cur_iou, _min, _max = com_iou(tpcds_dir + tpcds_table + "/" + file, column_name, column_type)
                 print("tpcds-" + tpcds_table + "-" + str(column_name) + "-" + str(column_type) + "-iou:" + str(cur_iou) + "-min:" + str(_min) + "-max:" + str(_max))
+                break
