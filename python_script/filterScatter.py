@@ -2,7 +2,6 @@ import datetime
 import os
 import pyarrow.parquet as pp
 import matplotlib.pyplot as plt
-import numpy as np
 
 from jaccardCompute import com_jaccard
 from indexConstruct import get_sys_min_max_value, get_min_max_value
@@ -79,11 +78,96 @@ def draw_scatter(file, dot_size, column, column_type, _start, _end):
     plt.close()
 
 if __name__ == "__main__":
-    file_name = "20220523_132505_00004_fs53m_509e9f99-1d58-4cf7-9d90-98845500e399"
-    draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name, 10, "cr_refunded_customer_sk", "int", str("174822"), str("174822"))
-    draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name, 10, "cr_refunded_cdemo_sk", "int", str("174822"), str("174822"))
-    draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name, 10, "cr_returning_customer_sk", "int", str("174822"), str("174822"))
-    draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/" + file_name, 10, "cr_returning_addr_sk", "int", str("174822"), str("174822"))
-    file_name = "20220523_142254_00019_fs53m_0a18d3c4-b84b-4ebe-b1e7-317a8391df3f"
-    draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/store_sales/" + file_name, 10, "ss_customer_sk", "int", str("174822"), str("174822"))
-    draw_scatter("/mydata/tpcds_parquet_300.db_rewrite/store_sales/" + file_name, 10, "ss_cdemo_sk", "int", str("174822"), str("174822"))
+    file_dir = "/mydata/tpch_parquet_300.db_rewrite/lineitem/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "orderkey", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "partkey", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpch_parquet_300.db_rewrite/part/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "partkey", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpch_parquet_300.db_rewrite/customer/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "custkey", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/catalog_returns/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "cr_order_number", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cr_returning_addr_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cr_returned_date_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cr_catalog_page_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cr_returned_date_sk", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "cs_sold_date_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cs_order_number", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cs_ship_date_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cs_catalog_page_sk", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/catalog_sales/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "cs_sold_date_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cs_order_number", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cs_ship_date_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cs_catalog_page_sk", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/customer/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "c_customer_sk", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/customer_address/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "ca_address_sk", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/customer_demographics/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "cd_demo_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "cd_dep_count", "int", str("0"), str("0"))
+
+    file_dir = "/mydata/tpcds_parquet_300.db_rewrite/store_sales/"
+    files = os.listdir(file_dir)
+    for file in files:
+        if ".png" not in file:
+            file_name = file
+            break
+    draw_scatter(file_dir + file_name, 10, "ss_item_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "ss_customer_sk", "int", str("0"), str("0"))
+    draw_scatter(file_dir + file_name, 10, "ss_addr_sk", "int", str("0"), str("0"))
