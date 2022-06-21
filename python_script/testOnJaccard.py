@@ -55,6 +55,36 @@ def is_eq(column_type, value1, value2):
     else:
         return float(value1) == float(value2)
 
+def get_max(column_type, value1, value2):
+    if column_type == "date":
+        temp_value1 = datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]), int(value1.split("-")[2]))
+        temp_value2 = datetime.date(int(value2.split("-")[0]), int(value2.split("-")[1]), int(value2.split("-")[2]))
+    elif column_type == "int":
+        temp_value1 = int(value1)
+        temp_value2 = int(value2)
+    elif column_type == "float":
+        temp_value1 = float(value1)
+        temp_value2 = float(value2)
+    if temp_value1 >= temp_value2:
+        return value1
+    else:
+        return value2
+
+def get_min(column_type, value1, value2):
+    if column_type == "date":
+        temp_value1 = datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]), int(value1.split("-")[2]))
+        temp_value2 = datetime.date(int(value2.split("-")[0]), int(value2.split("-")[1]), int(value2.split("-")[2]))
+    elif column_type == "int":
+        temp_value1 = int(value1)
+        temp_value2 = int(value2)
+    elif column_type == "float":
+        temp_value1 = float(value1)
+        temp_value2 = float(value2)
+    if temp_value1 <= temp_value2:
+        return value1
+    else:
+        return value2
+
 def get_sys_min_max_value(column_type):
     """
     :param column_type: 值的类型
@@ -151,7 +181,7 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
                 if _start in bloom:
                     _valid_block_num += 1
             else:#范围查询
-                if (is_lt(column_type, _start, _max) and is_gt(column_type, _start, _min)) or (is_lt(column_type, _end, _max) and is_gt(column_type, _end, _min)):
+                if is_lt(column_type, get_max(column_type, _min, _start), get_min(column_type, _max, _end)):
                     _valid_block_num += 1
     return _valid_block_num
 
@@ -230,9 +260,9 @@ if __name__ == "__main__":
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
         print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
-    print("origin_search")
-    for i in range(0, len(origin_search_list)):
-        search = origin_search_list[i]
-        perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
-        search.append(jaccard)
-        print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum))
+    # print("origin_search")
+    # for i in range(0, len(origin_search_list)):
+    #     search = origin_search_list[i]
+    #     perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+    #     search.append(jaccard)
+    #     print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum))
