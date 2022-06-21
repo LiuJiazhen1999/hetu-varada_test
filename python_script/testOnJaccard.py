@@ -157,69 +157,81 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
 
 if __name__ == "__main__":
     search_list = [
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "200000", ""],#14
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1040000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "orderkey", "int", "1000000000", "1035000000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "part", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "30000000", "30900000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "1000000", "1040000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_cdemo_sk", "int", "1000000", "1100000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "1000000", "1000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_cdemo_sk", "int", "2000000", "2000000", "点查询"]
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10400", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer", "c_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_address", "ca_address_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_item_sk", "int", "100000", "105280", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "orderkey", "int", "1000000000", "1000000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "part", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_order_number", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer", "c_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_address", "ca_address_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_demographics", "cd_dep_count", "int", "0", "0", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_item_sk", "int", "100000", "100000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
     origin_search_list = [
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "41200000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2060000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "52000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-2-20", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "40000000", "40000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "suppkey", "int", "2000000", "2000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "50000", "50000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "lineitem", "shipdate", "date", "1995-1-1", "1995-1-1", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "200000", "点查询"],#14
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1040000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "orderkey", "int", "1000000000", "1035000000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "part", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "30000000", "30900000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_customer_sk", "int", "2000000", "2000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_refunded_cdemo_sk", "int", "1000000", "1000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_customer_sk", "int", "2000000", "2000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "1000000", "1040000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_cdemo_sk", "int", "1000000", "1100000", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "1000000", "1000000", "点查询"],
-        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_cdemo_sk", "int", "2000000", "2000000", "点查询"]
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_order_number", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10400", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer", "c_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_address", "ca_address_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_item_sk", "int", "100000", "105280", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "orderkey", "int", "1000000000", "1000000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "part", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_order_number", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_order_number", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer", "c_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_address", "ca_address_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_demographics", "cd_dep_count", "int", "0", "0", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_item_sk", "int", "100000", "100000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
-    for i in range(23, len(search_list)):
+    for i in range(0, len(search_list)):
         search = search_list[i]
         perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
         print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
-    for i in range(23, len(origin_search_list)):
+    for i in range(0, len(origin_search_list)):
         search = origin_search_list[i]
         perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
