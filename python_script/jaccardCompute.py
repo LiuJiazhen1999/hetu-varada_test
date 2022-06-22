@@ -48,7 +48,8 @@ def com_jaccard_np(file_path, column_name, column_type):
                 elif column_type == "float":
                     _ = float(_)
                 arr2 = np.append(arr2, _)
-    X = np.vstack([arr1, arr2])
+    _len = min(arr1.size, arr2.size)
+    X = np.vstack([arr1[0:_len], arr2[0:_len]])
     return pdist(X, 'jaccard')
 
 def com_jaccard(file_path, column_name, column_type):
