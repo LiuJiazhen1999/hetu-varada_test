@@ -1,7 +1,11 @@
 #随机抽取文件中的两个row group，计算两者之间的Jaccard作为文件的数据分布情况
 
 import random
+
+import numpy as np
 import pyarrow.parquet as pp
+from scipy.spatial.distance import pdist
+
 
 def get_2_diff_index(row_group_num):
     random1 = random.random()
@@ -13,6 +17,39 @@ def get_2_diff_index(row_group_num):
     assert random1 >= 0 and random1 < row_group_num
     assert random2 >=0 and random2 < row_group_num
     return random1, random2
+
+def com_jaccard_np(file_path, column_name, column_type):
+    _table = pp.ParquetFile(file_path)
+    rg_num = _table.num_row_groups
+    if rg_num < 10:
+        return 0
+    arr1 = np.array([])
+    arr2 = np.array([])
+    for rg_index in range(0, int(rg_num / 5)):
+        if rg_index % 2 == 0:
+            rg1_content = _table.read_row_group(rg_index, columns=[column_name])
+            for _ in rg1_content.column(column_name):
+                _ = str(_)
+                if _ == "None":
+                    continue
+                if column_type == "int":
+                    _ = int(_)
+                elif column_type == "float":
+                    _ = float(_)
+                arr1 = np.append(arr1, _)
+        if rg_index % 2 == 1:
+            rg2_content = _table.read_row_group(rg_index, columns=[column_name])
+            for _ in rg2_content.column(column_name):
+                _ = str(_)
+                if _ == "None":
+                    continue
+                if column_type == "int":
+                    _ = int(_)
+                elif column_type == "float":
+                    _ = float(_)
+                arr2 = np.append(arr2, _)
+    X = np.vstack([arr1, arr2])
+    return pdist(X, 'jaccard')
 
 def com_jaccard(file_path, column_name, column_type):
     rg1_dict = dict()
