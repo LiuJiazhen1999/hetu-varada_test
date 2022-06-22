@@ -126,7 +126,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
             break
         file_count += 1
         _all_jaccard += com_jaccard_np(_dir + table + "/" + file, column, column_type)
-        _all_iou += com_iou(_dir + table + "/" + file, column, column_type)
+        _all_iou += com_iou(_dir + table + "/" + file, column, column_type)[0]
         _table = pp.ParquetFile(_dir + table + "/" + file)
         num_of_row_groups = _table.num_row_groups
         _all_block_num += num_of_row_groups
