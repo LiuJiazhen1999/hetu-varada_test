@@ -10,6 +10,7 @@ import sys
 import pyarrow.parquet as pp
 from pybloom_live import ScalableBloomFilter, BloomFilter
 
+from iouCompute import com_iou
 from jaccardCompute import com_jaccard_np
 
 
@@ -116,6 +117,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
     _valid_block_num = 0
     _all_block_num = 0
     _all_jaccard = 0
+    _all_iou = 0
     file_count = 0
     for file in files:
         if ".png" in file:
@@ -124,6 +126,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
             break
         file_count += 1
         _all_jaccard += com_jaccard_np(_dir + table + "/" + file, column, column_type)
+        _all_iou += com_iou(_dir + table + "/" + file, column, column_type)
         _table = pp.ParquetFile(_dir + table + "/" + file)
         num_of_row_groups = _table.num_row_groups
         _all_block_num += num_of_row_groups
@@ -136,7 +139,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
                 if is_lt(column_type, _start, _value) and is_gt(column_type, _end, _value):
                     _valid_block_num += 1
                     break
-    return _valid_block_num, _all_block_num, _all_jaccard/file_count
+    return _valid_block_num, _all_block_num, _all_jaccard/file_count, _all_iou/file_count
 
 def searchWithMMB(_dir, table, column, column_type, _start, _end):
     """
@@ -189,6 +192,7 @@ if __name__ == "__main__":
     search_list = [
         ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "orderkey", "int", "1000000000", "1035000000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "40000", "42000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db_rewrite/", "part", "partkey", "int", "30000000", "31200000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "30000000", "30900000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
@@ -223,6 +227,7 @@ if __name__ == "__main__":
     origin_search_list = [
         ["/mydata/tpch_parquet_300.db/", "lineitem", "orderkey", "int", "1000000000", "1035000000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "40000", "42000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db/", "part", "partkey", "int", "30000000", "31200000", "范围查询2%"],
         ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "30000000", "30900000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
@@ -254,12 +259,11 @@ if __name__ == "__main__":
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
-    for i in range(0, len(search_list)):
+    for i in range(2, 3):
         search = search_list[i]
-        perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+        perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
-        search.append(jaccard)
-        print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
+        print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     # print("origin_search")
     # for i in range(0, len(origin_search_list)):
     #     search = origin_search_list[i]
