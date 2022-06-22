@@ -53,6 +53,8 @@ def com_jaccard_np(file_path, column_name, column_type):
     return pdist(X, 'jaccard')
 
 def com_jaccard(file_path, column_name, column_type):
+    set1 = set()
+    set2 = set()
     rg1_dict = dict()
     union_num = 0
     join_num = 0
@@ -75,6 +77,7 @@ def com_jaccard(file_path, column_name, column_type):
                 if _ not in rg1_dict:
                     rg1_dict[_] = 0
                 rg1_dict[_] += 1
+                set1.add(_)
     for rg_index2 in range(0, int(rg_num/5)):
         if rg_index2 % 2 == 1:
             rg2_content = _table.read_row_group(rg_index2, columns=[column_name])
@@ -90,6 +93,9 @@ def com_jaccard(file_path, column_name, column_type):
                 if _ in rg1_dict:
                     join_num += (1 + rg1_dict[_])
                     rg1_dict[_] = 0
+                set2.add()
+    print("set_diff")
+    print(set1.difference(set2))
     return join_num/union_num
 
 def get_file_rg_num(file_path):
