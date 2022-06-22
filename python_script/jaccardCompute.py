@@ -96,6 +96,10 @@ def com_jaccard(file_path, column_name, column_type):
                 set2.add(_)
     print("set_diff")
     print(set1.difference(set2))
+    print("set1")
+    print(set1)
+    print("set2")
+    print(set2)
     return join_num/union_num
 
 def get_file_rg_num(file_path):
