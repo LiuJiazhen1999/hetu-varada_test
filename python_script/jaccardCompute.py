@@ -93,7 +93,7 @@ def com_jaccard(file_path, column_name, column_type):
                 if _ in rg1_dict:
                     join_num += (1 + rg1_dict[_])
                     rg1_dict[_] = 0
-                set2.add()
+                set2.add(_)
     print("set_diff")
     print(set1.difference(set2))
     return join_num/union_num
