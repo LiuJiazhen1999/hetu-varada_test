@@ -101,7 +101,10 @@ def com_iou(file_path: str, column_name: str, column_type: str):
     return total_iou/total_count, _min, _max
 
 if __name__ == "__main__":
-    com_iou("/mydata/tpch_parquet_300.db_rewrite/lineitem/20220524_040257_00019_fs53m_0ac223b1-073d-419a-a423-a83527104d5b", "extendedprice", "float")
+    iou, _min, _max = com_iou("/mydata/tpch_parquet_300.db_rewrite/lineitem/20220524_040257_00019_fs53m_0ac223b1-073d-419a-a423-a83527104d5b", "extendedprice", "float")
+    print(iou)
+    print(_min)
+    print(_max)
     # for tpch_table in tpch_table_set:
     #     tpch_dir = "/mydata/tpch_parquet_300.db_rewrite/"
     #     for i in range(len(tpch_table_set[tpch_table][0])):
