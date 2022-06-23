@@ -1,6 +1,7 @@
 import datetime
 import os
 import sys
+from random import random
 
 import pyarrow.parquet as pp
 
@@ -53,6 +54,69 @@ def compute_iou(_first, _second):
     join_len = min(_first[1], _second[1]) - max(_first[0], _second[0])
     total_len = max(_first[1], _second[1]) - min(_first[0], _second[0])
     return join_len/total_len
+
+def com_iou_random(file_path: str, column_name: str, column_type: str):
+    _table = pp.ParquetFile(file_path)
+    rg_num = _table.num_row_groups
+    if rg_num < 20:
+        return -1, 0, 0
+    _sample_num = int(rg_num/5)
+    if _sample_num % 2 == 1:
+        _sample_num += 1
+    sample_set = set()
+    while len(sample_set) < _sample_num:
+        sample_set.add(random.randint(0, rg_num - 1))
+    print("iou_sample_set")
+    print(sample_set)
+    _cur_index = 0
+    rgs1 = []
+    rgs2 = []
+    for _value in sample_set:
+        if _cur_index % 2 == 0:
+            rgs1.append(_value)
+        else:
+            rgs2.append(_value)
+    assert len(rgs2) == len(rgs1)
+    total_iou = 0
+    total_count = 0
+    _min = sys.maxsize
+    _max = -sys.maxsize
+    for _index in range(len(rgs1)):
+        _first_min = sys.maxsize
+        _first_max = -sys.maxsize
+        _second_min = sys.maxsize
+        _second_max = -sys.maxsize
+        rg1_content = _table.read_row_group(rgs1[_index], columns=[column_name])
+        for rg1_value in rg1_content.column(column_name):
+            rg1_value = str(rg1_value)
+            if rg1_value == "None":
+                continue
+            if column_type == "date":
+                rg1_value = date2int(rg1_value)
+            elif column_type == "int":
+                rg1_value = int(rg1_value)
+            elif column_type == "float":
+                rg1_value = float(rg1_value)
+            _first_max = max(_first_max, rg1_value)
+            _first_min = min(_first_min, rg1_value)
+        rg2_content = _table.read_row_group(rgs2[_index], columns=[column_name])
+        for rg2_value in rg2_content.column(column_name):
+            rg2_value = str(rg2_value)
+            if rg2_value == "None":
+                continue
+            if column_type == "date":
+                rg2_value = date2int(rg2_value)
+            elif column_type == "int":
+                rg2_value = int(rg2_value)
+            elif column_type == "float":
+                rg2_value = float(rg2_value)
+            _second_max = max(_second_max, rg2_value)
+            _second_min = min(_second_min, rg2_value)
+        _min = min(_min, min(_first_min, _second_min))
+        _max = max(_max, max(_first_max, _second_max))
+        total_count += 1
+        total_iou += compute_iou([_first_min, _first_max], [_second_min, _second_max])
+    return total_iou / total_count, _min, _max
 
 def com_iou(file_path: str, column_name: str, column_type: str):
     _table = pp.ParquetFile(file_path)
