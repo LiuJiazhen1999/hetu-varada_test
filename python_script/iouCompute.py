@@ -1,7 +1,7 @@
 import datetime
 import os
 import sys
-from random import random
+import random
 
 import pyarrow.parquet as pp
 
@@ -66,8 +66,6 @@ def com_iou_random(file_path: str, column_name: str, column_type: str):
     sample_set = set()
     while len(sample_set) < _sample_num:
         sample_set.add(random.randint(0, rg_num - 1))
-    print("iou_sample_set")
-    print(sample_set)
     _cur_index = 0
     rgs1 = []
     rgs2 = []

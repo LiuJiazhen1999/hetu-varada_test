@@ -67,8 +67,6 @@ def com_jaccard_random(file_path, column_name, column_type):
     while len(sample_set) < _sample_num:
         sample_set.add(random.randint(0, rg_num-1))
     cur_index = 0
-    print("jaccard_sample_set")
-    print(sample_set)
     for _index in sample_set:
         if cur_index % 2 == 0:
             rg_content = _table.read_row_group(_index, columns=[column_name])
