@@ -74,6 +74,7 @@ def com_iou_random(file_path: str, column_name: str, column_type: str):
             rgs1.append(_value)
         else:
             rgs2.append(_value)
+        _cur_index += 1
     assert len(rgs2) == len(rgs1)
     total_iou = 0
     total_count = 0
