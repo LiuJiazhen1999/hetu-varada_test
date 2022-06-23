@@ -52,6 +52,56 @@ def com_jaccard_np(file_path, column_name, column_type):
     X = np.vstack([arr1[0:_len], arr2[0:_len]])
     return pdist(X, 'jaccard')
 
+def com_jaccard_random(file_path, column_name, column_type):
+    _table = pp.ParquetFile(file_path)
+    rg_num = _table.num_row_groups
+    if rg_num < 10:
+        return 0
+    union_num = 0
+    join_num = 0
+    rg1_dict = dict()
+    _sample_num = int(rg_num/5)
+    if _sample_num % 2 == 1:
+        _sample_num += 1
+    sample_set = set()
+    while len(sample_set) < _sample_num:
+        sample_set.add(random.randint(0, rg_num-1))
+    cur_index = 0
+    for _index in sample_set:
+        if cur_index % 2 == 0:
+            rg_content = _table.read_row_group(_index, columns=[column_name])
+            for _ in rg_content.column(column_name):
+                _ = str(_)
+                if _ == "None":
+                    continue
+                if column_type == "int":
+                    _ = int(_)
+                elif column_type == "float":
+                    _ = float(_)
+                union_num += 1
+                if _ not in rg1_dict:
+                    rg1_dict[_] = 0
+                rg1_dict[_] += 1
+        cur_index += 1
+    cur_index = 0
+    for _index in sample_set:
+        if cur_index % 2 == 1:
+            rg_content = _table.read_row_group(_index, columns=[column_name])
+            for _ in rg_content.column(column_name):
+                _ = str(_)
+                if _ == "None":
+                    continue
+                if column_type == "int":
+                    _ = int(_)
+                elif column_type == "float":
+                    _ = float(_)
+                union_num += 1
+                if _ in rg1_dict:
+                    join_num += (1 + rg1_dict[_])
+                    rg1_dict[_] = 0
+    return join_num / union_num
+
+
 def com_jaccard(file_path, column_name, column_type):
     rg1_dict = dict()
     set1 = set()
@@ -92,7 +142,6 @@ def com_jaccard(file_path, column_name, column_type):
                 if _ in rg1_dict:
                     join_num += (1 + rg1_dict[_])
                     rg1_dict[_] = 0
-    print(set1)
     return join_num/union_num
 
 def get_file_rg_num(file_path):
