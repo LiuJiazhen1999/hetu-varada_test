@@ -259,13 +259,13 @@ if __name__ == "__main__":
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
-    for i in range(0, len(search_list)):
+    for i in range(7, 8):
         search = search_list[i]
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
-    for i in range(0, len(origin_search_list)):
+    for i in range(7, 8):
         search = origin_search_list[i]
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)

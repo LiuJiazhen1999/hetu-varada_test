@@ -10,6 +10,7 @@ import sys
 import pyarrow.parquet as pp
 from pybloom_live import ScalableBloomFilter, BloomFilter
 
+from iouCompute import com_iou
 from jaccardCompute import com_jaccard
 
 
@@ -55,6 +56,36 @@ def is_eq(column_type, value1, value2):
     else:
         return float(value1) == float(value2)
 
+def get_max(column_type, value1, value2):
+    if column_type == "date":
+        temp_value1 = datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]), int(value1.split("-")[2]))
+        temp_value2 = datetime.date(int(value2.split("-")[0]), int(value2.split("-")[1]), int(value2.split("-")[2]))
+    elif column_type == "int":
+        temp_value1 = int(value1)
+        temp_value2 = int(value2)
+    elif column_type == "float":
+        temp_value1 = float(value1)
+        temp_value2 = float(value2)
+    if temp_value1 >= temp_value2:
+        return value1
+    else:
+        return value2
+
+def get_min(column_type, value1, value2):
+    if column_type == "date":
+        temp_value1 = datetime.date(int(value1.split("-")[0]), int(value1.split("-")[1]), int(value1.split("-")[2]))
+        temp_value2 = datetime.date(int(value2.split("-")[0]), int(value2.split("-")[1]), int(value2.split("-")[2]))
+    elif column_type == "int":
+        temp_value1 = int(value1)
+        temp_value2 = int(value2)
+    elif column_type == "float":
+        temp_value1 = float(value1)
+        temp_value2 = float(value2)
+    if temp_value1 <= temp_value2:
+        return value1
+    else:
+        return value2
+
 def get_sys_min_max_value(column_type):
     """
     :param column_type: 值的类型
@@ -86,6 +117,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
     _valid_block_num = 0
     _all_block_num = 0
     _all_jaccard = 0
+    _all_iou = 0
     file_count = 0
     for file in files:
         if ".png" in file:
@@ -94,6 +126,7 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
             break
         file_count += 1
         _all_jaccard += com_jaccard(_dir + table + "/" + file, column, column_type)
+        _all_iou += com_iou(_dir + table + "/" + file, column, column_type)[0]
         _table = pp.ParquetFile(_dir + table + "/" + file)
         num_of_row_groups = _table.num_row_groups
         _all_block_num += num_of_row_groups
@@ -101,10 +134,12 @@ def naiveSearch(_dir, table, column, column_type, _start, _end):
             row_group_contents = _table.read_row_group(_index, columns=[column])
             for _value in row_group_contents.column(column):
                 _value = str(_value)
+                if _value == "None":
+                    continue
                 if is_lt(column_type, _start, _value) and is_gt(column_type, _end, _value):
                     _valid_block_num += 1
                     break
-    return _valid_block_num, _all_block_num, _all_jaccard/file_count
+    return _valid_block_num, _all_block_num, _all_jaccard/file_count, _all_iou/file_count
 
 def searchWithMMB(_dir, table, column, column_type, _start, _end):
     """
@@ -134,6 +169,8 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
             bloom = ScalableBloomFilter(initial_capacity=1000, error_rate=0.001)
             for _value in row_group_contents.column(column):
                 _value = str(_value)
+                if _value == "None":
+                    continue
                 if is_lt(column_type, _value, _min):
                     _min = _value
                 if is_gt(column_type, _value, _max):
@@ -147,34 +184,90 @@ def searchWithMMB(_dir, table, column, column_type, _start, _end):
                 if _start in bloom:
                     _valid_block_num += 1
             else:#范围查询
-                if (is_lt(column_type, _start, _max) and is_gt(column_type, _start, _min)) or (is_lt(column_type, _end, _max) and is_gt(column_type, _end, _min)):
+                if is_lt(column_type, get_max(column_type, _min, _start), get_min(column_type, _max, _end)):
                     _valid_block_num += 1
     return _valid_block_num
 
 if __name__ == "__main__":
     search_list = [
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
-        ["/mydata/tpch_parquet_300.db_rewrite/", "orders", "totalprice", "float", "200000", "200000", "点查询"]
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "orderkey", "int", "1000000000", "1035000000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "extendedprice", "float", "40000", "42000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "part", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "30000000", "30900000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10400", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer", "c_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_address", "ca_address_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_item_sk", "int", "100000", "105280", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "orderkey", "int", "1000000000", "1000000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "lineitem", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "part", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db_rewrite/", "customer", "custkey", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_order_number", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer", "c_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_address", "ca_address_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_demographics", "cd_dep_count", "int", "0", "0", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_item_sk", "int", "100000", "100000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
     origin_search_list = [
-        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20800000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5200", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "212000", "范围查询2%"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "20000000", "20000000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "customer", "acctbal", "float", "5000", "5000", "点查询"],
-        ["/mydata/tpch_parquet_300.db/", "orders", "totalprice", "float", "200000", "200000", "点查询"]
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "orderkey", "int", "1000000000", "1035000000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "extendedprice", "float", "40000", "42000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "part", "partkey", "int", "30000000", "31200000", "范围查询2%"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "30000000", "30900000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_order_number", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10400", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer", "c_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_address", "ca_address_sk", "int", "1000000", "1050000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1040000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_item_sk", "int", "100000", "105280", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
+
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "orderkey", "int", "1000000000", "1000000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "lineitem", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "part", "partkey", "int", "30000000", "30000000", "点查询"],
+        ["/mydata/tpch_parquet_300.db/", "customer", "custkey", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_order_number", "int", "30000000", "30000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_order_number", "int", "2451000", "2451000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer", "c_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_address", "ca_address_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_demographics", "cd_demo_sk", "int", "1000000", "1000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "customer_demographics", "cd_dep_count", "int", "0", "0", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_item_sk", "int", "100000", "100000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
+        ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
-    for search in search_list:
-        perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+    for i in range(0, len(search_list)):
+        search = search_list[i]
+        perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
-        search.append(jaccard)
-        print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
+        print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
-    for search in origin_search_list:
-        perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+    for i in range(0, len(origin_search_list)):
+        search = origin_search_list[i]
+        perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
-        print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum))
+        print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(
+            perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
