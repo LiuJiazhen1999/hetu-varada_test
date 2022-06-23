@@ -198,6 +198,9 @@ if __name__ == "__main__":
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_order_number", "int", "30000000", "31000000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_returns", "cr_returning_addr_sk", "int", "1000000", "1050000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451100", "2451160", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451300", "2451360", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451700", "2451760", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2451000", "2451060", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10400", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "customer", "c_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
@@ -259,13 +262,13 @@ if __name__ == "__main__":
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
-    for i in range(7, 8):
+    for i in range(7, 12):
         search = search_list[i]
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
-    for i in range(7, 8):
+    for i in range(7, 12):
         search = origin_search_list[i]
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)

@@ -105,7 +105,6 @@ def com_jaccard_random(file_path, column_name, column_type):
 
 def com_jaccard(file_path, column_name, column_type):
     rg1_dict = dict()
-    set1 = set()
     union_num = 0
     join_num = 0
     _table = pp.ParquetFile(file_path)
@@ -124,7 +123,6 @@ def com_jaccard(file_path, column_name, column_type):
                 elif column_type == "float":
                     _ = float(_)
                 union_num += 1
-                set1.add(_)
                 if _ not in rg1_dict:
                     rg1_dict[_] = 0
                 rg1_dict[_] += 1
