@@ -264,9 +264,10 @@ if __name__ == "__main__":
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
-    # print("origin_search")
-    # for i in range(0, len(origin_search_list)):
-    #     search = origin_search_list[i]
-    #     perfectnum, allnum, jaccard = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
-    #     search.append(jaccard)
-    #     print(str(search) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum))
+    print("origin_search")
+    for i in range(0, len(origin_search_list)):
+        search = origin_search_list[i]
+        perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
+        search.append(jaccard)
+        print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(
+            perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
