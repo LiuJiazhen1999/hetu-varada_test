@@ -201,7 +201,12 @@ if __name__ == "__main__":
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451100", "2451160", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451300", "2451360", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_sold_date_sk", "int", "2451700", "2451760", "范围查询2%"],
-        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2451000", "2451060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2452000", "2452060", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2452100", "2452160", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2452200", "2452260", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2452300", "2452360", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2452400", "2452460", "范围查询2%"],
+        ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_order_number", "int", "2452500", "2452560", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "catalog_sales", "cs_catalog_page_sk", "int", "10000", "10400", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "customer", "c_customer_sk", "int", "2000000", "2100000", "范围查询2%"],
         ["/mydata/tpcds_parquet_300.db_rewrite/", "customer_address", "ca_address_sk", "int", "1000000", "1050000", "范围查询2%"],
@@ -262,13 +267,13 @@ if __name__ == "__main__":
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_customer_sk", "int", "2000000", "2000000", "点查询%"],
         ["/mydata/tpcds_parquet_300.db/", "store_sales", "ss_addr_sk", "int", "1000000", "1000000", "点查询%"]
     ]
-    for i in range(7, 12):
+    for i in range(7, 17):
         search = search_list[i]
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         mmbnum = searchWithMMB(search[0], search[1], search[2], search[3], search[4], search[5])
         print(str(search) + " jaccard:" + str(jaccard) + " iou:" + str(iou) + " " + "perfectnum:" + str(perfectnum) + " " + "allnum:" + str(allnum) + " " + "mmbnum:" + str(mmbnum))
     print("origin_search")
-    for i in range(7, 12):
+    for i in range(7, 17):
         search = origin_search_list[i]
         perfectnum, allnum, jaccard, iou = naiveSearch(search[0], search[1], search[2], search[3], search[4], search[5])
         search.append(jaccard)
