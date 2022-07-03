@@ -1,10 +1,10 @@
 create schema if not exists hive.orc_tpch_100;
 use hive.orc_tpch_100;
-CREATE TABLE hive.orc_tpch_100.nation WITH (external_location='s3a://orc-tpch-100/nation, 'format = 'orc') AS SELECT * FROM tpch.sf100.nation;
-CREATE TABLE hive.orc_tpch_100.lineitem WITH (external_location='s3a://orc-tpch-100/lineitem, 'format = 'orc') AS SELECT * FROM tpch.sf100.lineitem;
-CREATE TABLE hive.orc_tpch_100.customer WITH (external_location='s3a://orc-tpch-100/customer, 'format = 'orc') AS SELECT * FROM tpch.sf100.customer;
-CREATE TABLE hive.orc_tpch_100.orders WITH (external_location='s3a://orc-tpch-100/orders, 'format = 'orc') AS SELECT * FROM tpch.sf100.orders;
-CREATE TABLE hive.orc_tpch_100.part WITH (external_location='s3a://orc-tpch-100/part, 'format = 'orc') AS SELECT * FROM tpch.sf100.part;
-CREATE TABLE hive.orc_tpch_100.partsupp WITH (external_location='s3a://orc-tpch-100/partsupp, 'format = 'orc') AS SELECT * FROM tpch.sf100.partsupp;
-CREATE TABLE hive.orc_tpch_100.region WITH (external_location='s3a://orc-tpch-100/region, 'format = 'orc') AS SELECT * FROM tpch.sf100.region;
-CREATE TABLE hive.orc_tpch_100.supplier WITH (external_location='s3a://orc-tpch-100/supplier, 'format = 'orc') AS SELECT * FROM tpch.sf100.supplier;
+CREATE TABLE hive.orc_tpch_100.nation WITH (external_location='s3a://orc-tpch-100/nation', format = 'orc') AS SELECT * FROM tpch.sf100.nation;
+CREATE TABLE hive.orc_tpch_100.lineitem WITH (external_location='s3a://orc-tpch-100/lineitem', format = 'orc') AS SELECT * FROM tpch.sf100.lineitem;
+CREATE TABLE hive.orc_tpch_100.customer WITH (external_location='s3a://orc-tpch-100/customer', format = 'orc') AS SELECT * FROM tpch.sf100.customer;
+CREATE TABLE hive.orc_tpch_100.orders WITH (external_location='s3a://orc-tpch-100/orders', format = 'orc') AS SELECT * FROM tpch.sf100.orders;
+CREATE TABLE hive.orc_tpch_100.part WITH (external_location='s3a://orc-tpch-100/part', format = 'orc') AS SELECT * FROM tpch.sf100.part;
+CREATE TABLE hive.orc_tpch_100.partsupp WITH (external_location='s3a://orc-tpch-100/partsupp', format = 'orc') AS SELECT * FROM tpch.sf100.partsupp;
+CREATE TABLE hive.orc_tpch_100.region WITH (external_location='s3a://orc-tpch-100/region', format = 'orc') AS SELECT * FROM tpch.sf100.region;
+CREATE TABLE hive.orc_tpch_100.supplier WITH (external_location='s3a://orc-tpch-100/supplier', format = 'orc') AS SELECT * FROM tpch.sf100.supplier;
