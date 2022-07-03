@@ -1,0 +1,9 @@
+use hive.orc_tpch_100;
+SHOW COLUMNS FROM lineitem;
+SHOW COLUMNS FROM customer;
+SHOW COLUMNS FROM nation;
+SHOW COLUMNS FROM orders;
+SHOW COLUMNS FROM part;
+SHOW COLUMNS FROM partsupp;
+SHOW COLUMNS FROM region;
+SHOW COLUMNS FROM supplier;
